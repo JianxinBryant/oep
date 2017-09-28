@@ -74,34 +74,37 @@
 </head>
 
 
-<body class="bg-success">
-	<div class="container">
+<body style="background-image: url('img/managerlogin.jpg');">
+<div style="background-color: black;margin: 0;min-height: 985px;width: 100%;position: absolute;opacity:0.3;z-index: 1"></div>
+	<div class="container"  style="position: absolute;z-index: 2;margin-left: 20%">
 		<div class="row">
-			<div style="margin-left:90%"><a href="Login.jsp" style="color:#CC0033">普通用户登录点我</a></div>
-			<div style="margin-top: 150px; margin-left: 35%">
-				<h1>在&nbsp;线&nbsp;考&nbsp;试&nbsp;平&nbsp;台</h1>
+			<div style="margin-left:90%"><a href="Login.jsp" style="color:white">普通用户登录点我</a></div>
+			<div style="margin-top: 150px; margin-left: 37%">
+				<h1 style="color: white;">在&nbsp;线&nbsp;考&nbsp;试&nbsp;平&nbsp;台</h1>
 			</div>
-			<div style="margin-top: 50px; margin-left: 42%">
-				<h2>请&nbsp;登&nbsp;录</h2>
-			</div>
+			
 			<div class="col-md-3"></div>
 			<div class="col-md-6" style="margin-top: 50px">
 				<!-- 登陆 -->
-				<div>
+				
+				<div
+					style="background-color: white; height: 400px; width: 550px; margin-left: -30px; border-radius: 10px; opacity: 0.8">
+					<div
+						style="width: 450px; height: 250px; position: absolute; left: 110px; margin-top: 60px;">
 					<div class="form-group" id="U_Name">
-						<label>用户名</label> <input type="text" class="form-control"
+						<label>用户名</label> <input style="max-width: 350px" type="text" class="form-control"
 							id="uname" placeholder="请输入用户名" value="${cookie.tname.value}">
 						<div id="uname-nullerror" style="color: red; display: none" class="alert alert-danger">管理员名不能为空！</div>
 						<div id="uname-existerror" style="color: red; display: none" class="alert alert-danger">管理员不存在！</div>
 					</div>
 					<div class="form-group">
-						<label>密码</label> <input type="password" class="form-control"
+						<label>密码</label> <input style="max-width: 350px" type="password" class="form-control"
 							id="upsw" placeholder="请输入用户密码" value="${cookie.tpsw.value}">
 						<div id="psw-nullerror" style="color: red; display: none" class="alert alert-danger">密码不能为空！</div>
 					</div>
 					
 					<div class="form-group" id="Idtfcode">
-						<label>验证码</label> <input type="text" 
+						<label></label> <input style="max-width: 350px" type="text" 
 							id="idtfcode" placeholder="请输入图片中的数字"/>
 						<img id="codeimg" src="${pageContext.request.contextPath}/hwx/crtcode" style="width: 80px;height: 30px"/>
 						
@@ -112,7 +115,7 @@
 					</div>
 					<button class="btn btn-danger" id="Loginbtn"
 						style="margin-left: 25%">登&nbsp;录</button>
-					
+					</div>
 				</div>
 			</div>
 			<div class="col-md-3"></div>

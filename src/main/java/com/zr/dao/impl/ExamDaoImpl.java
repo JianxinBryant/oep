@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.lang.model.element.Element;
+
 import com.zr.dao.ExamDao;
 import com.zr.model.Exam;
 import com.zr.model.Exam_question;
@@ -88,27 +90,28 @@ public class ExamDaoImpl implements ExamDao {
 
 	@Override
 	public boolean deleteByIds(int[] examIds) {
+		
 		// 记录结果
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM exam WHERE e_id IN (");
 		// 组装sql语句
 		for (int i = 0; i < examIds.length; i++) {
-			sql.append(examIds[i]);
 			if (i == examIds.length - 1) {
-				sql.append(")");
+				sql.append("?)");
 			} else {
-				sql.append(",");
+				sql.append("?,");
 			}
 		}
 		// 信息sql部分
 		try {
 			PreparedStatement ps = con.prepareStatement(sql.toString());
-			if (examIds.length != ps.executeUpdate()) {
-				throw new SQLException();// 删除过程异常
-			} else {
-				result = true;// 删除成功
+			int i = 1;
+			for(int eid:examIds){
+				ps.setInt(i++, eid);
 			}
+			if(ps.executeUpdate() == examIds.length)
+				result = true;// 删除成功
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -415,7 +418,6 @@ public class ExamDaoImpl implements ExamDao {
 			}
 			return exam;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return exam;

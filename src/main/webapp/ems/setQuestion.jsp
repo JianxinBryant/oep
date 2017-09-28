@@ -454,12 +454,11 @@
 			width : 150,
 			onClick : function(){
 				$("#previewPanel").window("open","true");
-				$("#previewPanel iframe").attr("src","${pageContext.request.contextPath}/ems/preview.jsp");
+				$("#previewPanel iframe").attr("src","${pageContext.request.contextPath}/ems/preview");
 			}
 		});
 		$("#issuebtn span:last").css("font-size","20px");
 		$("#previewPanel").window({
-			//href : "${pageContext.request.contextPath}/ems/preview.jsp",
 			width : 1200,
 			height : 600,
 			title : "预览",
@@ -503,7 +502,7 @@
 	});
 </script>
 <body>
-	<div id="previewPanel"><iframe src="" style="width: 100%"></iframe></div>
+	<div id="previewPanel"><iframe src="" style="width: 99%;height: 99%"></iframe></div>
 	<div class="easyui-layout" style="width:100%;height:700px;">
         <div data-options="region:'north'" title="考试信息" style="height:110px">
         	<h2 style="float: right;">

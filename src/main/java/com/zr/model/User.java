@@ -7,6 +7,7 @@ public class User {
 	private String u_email;
 	private String u_telephone;
 	private String u_registertime;
+	private String u_rdate;
 	
 	public String getU_registertime() {
 		return u_registertime;
@@ -14,6 +15,14 @@ public class User {
 	public void setU_registertime(String u_registertime) {
 		this.u_registertime = u_registertime;
 	}
+
+	public String getU_rdate() {
+		return u_rdate;
+	}
+	public void setU_rdate(String u_rdate) {
+		this.u_rdate = u_rdate;
+	}
+
 	public int getU_id() {
 		return u_id;
 	}

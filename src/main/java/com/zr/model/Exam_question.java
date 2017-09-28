@@ -4,7 +4,14 @@ public class Exam_question {
 
 	private int e_id;
 	private int q_id;
+	private int score;
 	
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public int getE_id() {
 		return e_id;
 	}

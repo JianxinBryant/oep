@@ -185,11 +185,13 @@ $(function(){
 	});  
 	$("#save").linkbutton({
 		onClick : function() {
+			console.log($("input[name='u_id']").val());
+			console.log($("input[name='u_name']").val());
 			$('#fm').form({
 	    		queryParams : {
 					uid : $("input[name='u_id']").val(),
 			    	uname : $("input[name='u_name']").val(),
-			    	utelephone:$("input[name='u_telephone']").val(),
+			    	utelephone : $("input[name='u_telephone']").val(),
 			    	uemail : $("input[name='u_email']").val(),
 			    	uregistertime : $("input[name='u_registertime']").val()
 				},

@@ -15,12 +15,7 @@ public interface ExamService {
 	 */
 	public JSONObject getExamByKey(String key,int currentPage,int pageSize);
 
-	/**
-	 * 根据id[]批量删除考试
-	 * @param examIds
-	 * @return	删除成功返回true
-	 */
-	public boolean deleteExamByIds(int[] examIds);
+
 
 	/**
 	 * 新增一门考试
@@ -77,5 +72,21 @@ public interface ExamService {
 	 */
 	public boolean issueExam(int examId);
 	
-	public String getExamTimeService(int e_id); 
+	public String getExamTimeService(int e_id);
+
+	/**
+	 * 获取考试全部信息:基本信息,试题
+	 * @param currentExamId
+	 * @return
+	 */
+	public JSONObject getExamInfo(int currentExamId);
+	
+	/**
+	 * 根据id[]批量删除考试
+	 * @param examIds
+	 * @return	删除成功返回true
+	 * 
+	 * @kramer
+	 */
+	public boolean deleteExamByIds(int[] examIds);
 }

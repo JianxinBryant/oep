@@ -8,8 +8,11 @@ import com.zr.dao.ExamDao;
 import com.zr.dao.TypeDao;
 import com.zr.dao.impl.ExamDaoImpl;
 import com.zr.dao.impl.TypeDaoImpl;
+import com.zr.dao.qktemp.QuestionDao;
+import com.zr.dao.qktemp.QuestionDaoImpl;
 import com.zr.model.Exam;
 import com.zr.model.Exam_question;
+import com.zr.model.Optionofquestion;
 import com.zr.model.Question;
 import com.zr.model.Type;
 import com.zr.service.ExamService;
@@ -73,10 +76,6 @@ public class ExamServiceImpl implements ExamService {
 		System.out.println(obj);
 	}
 
-	@Override
-	public boolean deleteExamByIds(int[] examIds) {
-		return examDao.deleteByIds(examIds);
-	}
 
 	@Override
 	public int insertExam(String examName, String examStartTime, String examEndTime, int examTotal) {
@@ -223,5 +222,49 @@ public class ExamServiceImpl implements ExamService {
 		examtime.append(endtime);
 		System.out.println(examtime.toString());
 		return examtime.toString();
+	}
+
+	@Override
+	public JSONObject getExamInfo(int currentExamId) {
+		JSONObject examInfo = new JSONObject();
+		examInfo.put("exam", examDao.getExamById(currentExamId));
+		JSONArray questions = new JSONArray();
+		List<Question> questionList = examDao.getQuestionOfExam(currentExamId);
+		for(Question qq:questionList){
+			JSONObject question = new JSONObject();
+			question.put("question", qq);
+			List<Optionofquestion> optionlist = hasOptions(qq.getQ_id());
+			if(optionlist.size()>0){
+				JSONArray options = new JSONArray();
+				for(Optionofquestion oo:optionlist){
+					options.add(oo);
+				}
+				question.put("options", options);
+			}
+			questions.add(question);
+		}
+		examInfo.put("questions", questions);
+		return examInfo;
+	}
+
+	/**
+	 * 是否有选项
+	 * @return
+	 */
+	private List<Optionofquestion> hasOptions(int questionId){
+		QuestionDao dao = new QuestionDaoImpl();
+		return dao.hasOption(questionId);
+	}
+	
+	@Override
+	public boolean deleteExamByIds(int[] examIds) {
+		QuestionDao dao = new QuestionDaoImpl();
+		//删除考试中的题目
+		if(dao.removeAllQuestionOfExam(examIds)){
+			//删除考试
+			return examDao.deleteByIds(examIds);
+		} else {
+			return false;
+		}
 	}
 }

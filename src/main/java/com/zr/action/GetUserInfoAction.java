@@ -35,9 +35,10 @@ public class GetUserInfoAction extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		//获取参数
 		String userkey = req.getParameter("userkey");//搜索关键词
+		String boxvalue = req.getParameter("boxvalue");//下拉列表中被选中的值
 		int page = Integer.valueOf(req.getParameter("page"));//当前页码
 		int pageSize = Integer.valueOf(req.getParameter("rows"));//每页行数
-		JSONObject json = gs.getUserInfo(page, pageSize, userkey);
+		JSONObject json = gs.getUserInfo(boxvalue,page, pageSize, userkey);
 		
 		resp.setCharacterEncoding("utf-8");
 		resp.getWriter().write(json.toString());

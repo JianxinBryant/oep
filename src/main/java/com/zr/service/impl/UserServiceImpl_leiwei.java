@@ -13,16 +13,17 @@ import net.sf.json.JSONObject;
 
 public class UserServiceImpl_leiwei implements UserService_leiwei{
 	UserDao_leiwei udao = new UserDaoImpl_leiwei();
+	
 	/**
 	 * 获取用户信息 
 	 */
 	@Override
-	public JSONObject getUserInfo(int page, int pageSize, String userkey) {
+	public JSONObject getUserInfo(String boxvalue,int page, int pageSize, String userkey) {
 		JSONObject json = new JSONObject();
 		List<User> userlist = new ArrayList<User>() ;
 		
 		//获取total
-		int count = udao.SelectUserInfoByUserkey((page-1)*pageSize, pageSize, userkey, userlist);
+		int count = udao.SelectUserInfoByUserkey(boxvalue, (page-1)*pageSize, pageSize, userkey, userlist);
 		json.put("total", count);
 		//获取rows数组对象
 		JSONArray jsonArray = new JSONArray();

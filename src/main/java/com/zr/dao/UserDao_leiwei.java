@@ -6,13 +6,15 @@ import com.zr.model.User;
 
 public interface UserDao_leiwei {
 	/**
-	 * 根据用户关键字分页查询用户信息,获得总行数count  
+	 * 根据选择的字段和用户关键字分页查询用户信息,获得总行数count  
+	 * @param boxvalue
 	 * @param start
 	 * @param pageSize
 	 * @param userkey
+	 * @param userlist
 	 * @return
 	 */
-	public int SelectUserInfoByUserkey(int start,int pageSize,String userkey,List<User> userlist);
+	public int SelectUserInfoByUserkey(String boxvalue,int start,int pageSize,String userkey,List<User> userlist);
 	
 	/**
 	 * 删除用户信息

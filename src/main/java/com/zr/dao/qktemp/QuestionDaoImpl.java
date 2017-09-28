@@ -1,5 +1,6 @@
 package com.zr.dao.qktemp;
 
+import java.nio.charset.MalformedInputException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.zr.model.Optionofquestion;
 import com.zr.model.Question;
 import com.zr.model.Type;
 import com.zr.utils.JDBCUtil;
@@ -78,5 +80,61 @@ public class QuestionDaoImpl implements QuestionDao {
 		question.setT_id(rs.getInt("t_id"));
 		question.setQ_answer(rs.getString("q_answer"));
 		return question;
+	}
+
+	@Override
+	public List<Optionofquestion> hasOption(int questionId) {
+		List<Optionofquestion> optionlist = new LinkedList<>();
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT q_id,o_content,abcd FROM optionofquestion WHERE q_id = ?");
+		try {
+			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps.setInt(1, questionId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Optionofquestion option = new Optionofquestion();
+				option.setQ_id(rs.getInt("q_id"));
+				option.setO_content(rs.getString("o_content"));
+				option.setAbcd(rs.getString("abcd"));
+				optionlist.add(option);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return optionlist;
+	}
+
+	public static void main(String[] args) {
+		int[] eid = {102,103};
+		QuestionDao dao = new QuestionDaoImpl();
+		dao.removeAllQuestionOfExam(eid);
+	}
+
+	@Override
+	public boolean removeAllQuestionOfExam(int[] examIds) {
+		boolean result = false;
+		StringBuffer sql = new StringBuffer();
+		sql.append("DELETE FROM exam_question WHERE e_id IN (");
+		for (int i = 0; i < examIds.length; i++) {
+			if (i == examIds.length - 1) {
+				sql.append("?)");
+			} else {
+				sql.append("?,");
+			}
+		}
+		try {
+			// 批量更新
+			PreparedStatement ps = con.prepareStatement(sql.toString());
+			int i = 1;
+			for (int eid : examIds) {
+				ps.setInt(i++, eid);
+			}
+			System.out.println(ps.toString());
+			if(ps.executeUpdate() > 0)
+				result = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

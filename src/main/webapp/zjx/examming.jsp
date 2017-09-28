@@ -53,7 +53,10 @@
                 <button id="btn1">交卷</button>
             </div>
             <div id="col3" class="col-md-3" style="border: 1px solid">
-                <div id="showbullet" style="margin-top: 20px ;height: 430px; border: 1px solid">1111111</div>
+            	<div style="margin-top: 20px ;height: 200px; border: 1px solid">
+            		<iframe src="${pageContext.request.contextPath }/ems/sxt.jsp" style="width: 100%;height:250px; "></iframe>
+            	</div>
+                <div id="showbullet" style="margin-top: 20px ;height: 280px; border: 1px solid">1111111</div>
                 <div id="writebullet" style="margin-top: 20px ;height: 100px; border: 1px solid">1111111</div>
             </div>
         </div>

@@ -112,4 +112,11 @@ public interface ExamDao {
 	 */
 	boolean issueExam(int examId);
 	
+	/**
+	 * 得到考试时间
+	 * @param e_id
+	 * @return
+	 */
+	Exam getExamTime(int e_id);
+	
 }

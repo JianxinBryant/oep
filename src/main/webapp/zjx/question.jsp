@@ -4,19 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>首页</title>
+<title>Insert title here</title>
 <!-- 先引入jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/jquery-1.9.1.js"></script>
-<!-- 引入chart.js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/Chart.js"></script>
-<!-- 引入bootstrap -->
+<!-- 引入bootstrap.css -->
 <link type="text/css" href="${pageContext.request.contextPath}/statics/js/bootstrap.min.css" rel="stylesheet">
-<script type="text/javascript" src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/statics/js/queryscore.js"></script>
 </head>
 <body>
-<a id='myexam'>我的考试</a>
-<a id='myinfo'>个人信息</a>
 
 </body>
 </html>

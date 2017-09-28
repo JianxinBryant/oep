@@ -109,4 +109,190 @@
     <servlet-name>EMSRemoveQuestionOfExam</servlet-name>
     <servlet-class>com.zr.action.ems.examQuestion.RemoveQuestionOfExamAction</servlet-class>
   </servlet>
+  <!-- 预览 -->
+  <servlet-mapping>
+    <servlet-name>EMSPreview</servlet-name>
+    <url-pattern>/ems/preview</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EMSPreview</servlet-name>
+    <servlet-class>com.zr.action.ems.PreviewAction</servlet-class>
+  </servlet>
+  <!-- 发布考试-->
+  <servlet-mapping>
+    <servlet-name>EMSIssueExam</servlet-name>
+    <url-pattern>/ems/issue</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EMSIssueExam</servlet-name>
+    <servlet-class>com.zr.action.ems.IssueExamAction</servlet-class>
+  </servlet>
+    <!-- 更新考试 -->
+  <servlet-mapping>
+    <servlet-name>EMSUpdateAction</servlet-name>
+    <url-pattern>/ems/update</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EMSUpdateAction</servlet-name>
+    <servlet-class>com.zr.action.ems.UpdateAction</servlet-class>
+  </servlet>
+  
+  <!-- ？？？ -->
+  <servlet-mapping>
+  	<servlet-name>queryQuestionAction</servlet-name>
+  	<url-pattern>/zjx/queryQuestionAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>queryQuestionAction</servlet-name>
+  	<servlet-class>com.zr.action.QueryQuestionAction</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>insertAnswerAction</servlet-name>
+  	<url-pattern>/zjx/insertAnswerAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>insertAnswerAction</servlet-name>
+  	<servlet-class>com.zr.action.InsertAnswerAction</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>insertAnswerAction1</servlet-name>
+  	<url-pattern>/zjx/insertAnswerAction1</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>insertAnswerAction1</servlet-name>
+  	<servlet-class>com.zr.action.InsertAnswerAction1</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+  	<servlet-name>deleteAnswerAction</servlet-name>
+  	<url-pattern>/zjx/deleteAnswerAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>deleteAnswerAction</servlet-name>
+  	<servlet-class>com.zr.action.DeleteAnswerAction</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>queryEtimeAction</servlet-name>
+  	<url-pattern>/zjx/queryEtimeAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>queryEtimeAction</servlet-name>
+  	<servlet-class>com.zr.action.QueryEtimeAction</servlet-class>
+  </servlet>
+  
+  <!-- 用户登录 -->
+  <servlet-mapping>
+    <servlet-name>loginAction</servlet-name>
+    <url-pattern>/hwx/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>loginAction</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.LoginAction</servlet-class>
+  </servlet>
+  
+  <!-- 用户注册 -->
+  <servlet-mapping>
+    <servlet-name>registerAction</servlet-name>
+    <url-pattern>/hwx/register</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>registerAction</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.RegisterAction</servlet-class>
+  </servlet>
+  
+   <!--判断两次密码是否一致-->
+  <servlet-mapping>
+    <servlet-name>validatePSW</servlet-name>
+    <url-pattern>/hwx/valipsw</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>validatePSW</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.ValidatePsw</servlet-class>
+  </servlet>
+  
+  <!--判断邮箱地址是否合法-->
+  <servlet-mapping>
+    <servlet-name>checkEmail</servlet-name>
+    <url-pattern>/hwx/checkemail</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>checkEmail</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.CheckEmail</servlet-class>
+  </servlet>
+  
+  <!--判断用户名是否存在-->
+  <servlet-mapping>
+    <servlet-name>checkUname</servlet-name>
+    <url-pattern>/hwx/checkuname</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>checkUname</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.CheckUname</servlet-class>
+  </servlet>
+ 
+ <!-- 管理员登录 -->
+  <servlet-mapping>
+    <servlet-name>MloginAction</servlet-name>
+    <url-pattern>/hwx/managerlogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MloginAction</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.MLoginAction</servlet-class>
+  </servlet>
+  
+  <!--判断管理员是否存在-->
+  <servlet-mapping>
+    <servlet-name>checkMname</servlet-name>
+    <url-pattern>/hwx/checkmname</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>checkMname</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.CheckMname</servlet-class>
+  </servlet>
+  
+  
+  <!--验证码生成-->
+  <servlet-mapping>
+    <servlet-name>CreateIdentifyingcode</servlet-name>
+    <url-pattern>/hwx/crtcode</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CreateIdentifyingcode</servlet-name>
+    <servlet-class>com.zr.action.LoginRegister.CreateCodeAction</servlet-class>
+  </servlet>
+  
+  
+  
+  <!-- 用户查询 -->
+  <servlet>
+    <servlet-name>selectUser</servlet-name>
+    <servlet-class>com.zr.action.GetUserInfoAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>selectUser</servlet-name>
+    <url-pattern>/selectUser</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 用户删除 -->
+  <servlet-mapping>
+    <servlet-name>RemoveUser</servlet-name>
+    <url-pattern>/removeUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RemoveUser</servlet-name>
+    <servlet-class>com.zr.action.RemoveUserAction</servlet-class>
+  </servlet>
+  
+  <!-- 编辑用户 -->
+  <servlet-mapping>
+    <servlet-name>EditUser</servlet-name>
+    <url-pattern>/editUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EditUser</servlet-name>
+    <servlet-class>com.zr.action.EditUserAction</servlet-class>
+  </servlet>
 </web-app>

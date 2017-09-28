@@ -76,4 +76,6 @@ public interface ExamService {
 	 * @return
 	 */
 	public boolean issueExam(int examId);
+	
+	public String getExamTimeService(int e_id); 
 }

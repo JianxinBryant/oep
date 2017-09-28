@@ -98,7 +98,6 @@ $(function(){
 			var row = $('#usertb').datagrid('getSelected');
 			if (row) {
 				$('#editwin').dialog('open').dialog('center');
-				$('#fm').form('clear');
 				$('#fm').form('load', row);		
 			}else{
 				 $.messager.alert('提示',"请选择一条需要修改的记录");
@@ -125,13 +124,11 @@ $(function(){
 		});  
 	$("#save").linkbutton({
 		onClick : function() {
-			console.log($("input[name='u_id']").val());
-			console.log($("input[name='u_name']").val());
 			$('#fm').form({
 	    		queryParams : {
 					uid : $("input[name='u_id']").val(),
 			    	uname : $("input[name='u_name']").val(),
-			    	utelephone : $("input[name='u_telephone']").val(),
+			    	utelephone:$("input[name='u_telephone']").val(),
 			    	uemail : $("input[name='u_email']").val(),
 			    	uregistertime : $("input[name='u_registertime']").val()
 				},

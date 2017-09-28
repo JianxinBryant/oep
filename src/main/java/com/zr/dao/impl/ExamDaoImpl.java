@@ -399,4 +399,25 @@ public class ExamDaoImpl implements ExamDao {
 		}
 		return result;
 	}
+
+	@Override
+	public Exam getExamTime(int e_id) {
+		Exam exam = new Exam();
+		Connection con = JDBCUtil.getConnection();
+		StringBuffer sql = new StringBuffer("SELECT exam.e_starttime,exam.e_endtime FROM exam WHERE e_id = ?");
+		try {
+			PreparedStatement pst = con.prepareStatement(sql.toString());
+			pst.setInt(1, e_id);
+			ResultSet set = pst.executeQuery();
+			if(set.next()){
+				exam.setE_starttime(set.getString(1));
+				exam.setE_endtime(set.getString(2));
+			}
+			return exam;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return exam;
+	}
 }

@@ -15,7 +15,7 @@ public interface UserService_leiwei {
 	 * @param userkey
 	 * @return 用户信息的JSON对象
 	 */
-	public JSONObject getUserInfo(int page, int pageSize, String userkey);
+	public JSONObject getUserInfo(String boxvalue,int page, int pageSize, String userkey);
 
 	/**
 	 * 删除用户记录通过uid

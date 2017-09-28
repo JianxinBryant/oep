@@ -17,6 +17,10 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/statics/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/statics/js/jquery.table2excel.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/statics/js/jquery.jqprint.js"></script>
 <style type="text/css">
 #head {
 	width: 100%;
@@ -36,7 +40,7 @@
 			<li role="presentation" class="active"><a href="#">个人信息</a></li>
 			<li role="presentation"><a href="#"
 				style="margin: 0px 200px 0px 0px">正在考试</a></li>
-			<li role="presentation"><h4>aaa</h4></li>
+			<li role="presentation"><h3>aaa</h3></li>
 		</ul>
 	</div>
 	<div class="container">
@@ -59,10 +63,37 @@
 
 				</table>
 				<div id="b"></div>
+				<div id="mo">
+					<button class="btn btn-default" data-toggle="modal"
+						data-target="#myModal" id="show">导出成绩到excel或打印成绩</button>
+				</div>
 			</div>
 			<div class="col-md-1"></div>
-			<div class="col-md-5" id="chdiv1">
-				
+			<div class="col-md-5" id="chdiv1"></div>
+		</div>
+
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+
+						<h4 class="modal-title" id="myModalLabel">是否导出为excel</h4>
+					</div>
+					<div class="modal-body">
+						<table id="c" border="1">
+
+						</table>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal" id="cancel">取消</button>
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal" id="btn">导出为excel</button>
+							<button type="button" class="btn btn-primary" id="pri">打印</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

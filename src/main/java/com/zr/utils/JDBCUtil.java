@@ -10,7 +10,7 @@ public class JDBCUtil {
 	  private  final  static String DBURL = "jdbc:mysql://localhost:3306/oep?useUnicode=true&characterEncoding=UTF8";
 	  //2.设置用户和密码
 	  private  final  static String  USERNAME = "root";
-	  private  final  static String  PASSWORD = "123";
+	  private  final  static String  PASSWORD = "123456";
 			
 	   /**
 	    * 获取数据库连接

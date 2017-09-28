@@ -6,7 +6,7 @@
 	var totalpage2;
 	var flag;
 	var flag2;
-	var size=1;
+	var size=3;
 	var showpage=5;
 	$(function() {
 		//绑定回车事件

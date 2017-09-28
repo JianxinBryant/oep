@@ -77,7 +77,12 @@
 						insertExam();						
 					}
 				});
-				//location.href = "${pageContext.request.contextPath}/ems/examDetail.jsp";
+				$("#cancelBtn").linkbutton({
+					text : "重置",
+					onClick : function(){
+						$("#ff").form("clear");
+					}
+				});
 			}
 		});
 		//编辑
@@ -92,15 +97,15 @@
 					examId : editrow.examId,
 					examName : editrow.examName,
 					examStartTime : editrow.examStartTime,
-					examEndTime : editrow.examStartTime,
+					examEndTime : editrow.examEndTime,
 					examTotal : editrow.examTotal
 				};
 				//考试名
 				$("#eName").textbox("setValue",editrow.examName);
 				//考试开始时间
-				$("#eStartTime").datetimebox("setValue",editrow.examStartTime);
+				$("#eStartTime").textbox("setValue",exam.examStartTime);
 				//考试结束时间
-				$("#eEndTime").datetimebox("setValue",editrow.examEndTime);
+				$("#eEndTime").textbox("setValue",exam.examEndTime);
 				//总分
 				$("#eTotal").numberspinner("setValue",editrow.examTotal);  
 				$("#panel").window({title:"更新考试"});
@@ -111,6 +116,26 @@
 					text : "更新",
 					onClick : function(){
 						updateExam(editrow.examId);		
+					}
+				});
+				$("#clearBtn").linkbutton({
+					text : "设置试题",
+					onClick : function(){
+						$.ajax({
+							url : "${pageContext.request.contextPath}/ems/intoSetQuestion",
+							type : "post",
+							data : {
+								currentExamId : editrow.examId
+							},
+							dataType : "json",
+							success : function(data){
+								if(data.result == true){
+									location.href = data.url;
+								}else{
+									alert("系统错误,请刷新页面后重试!");
+								}
+							}
+						});
 					}
 				});
 			}
@@ -227,6 +252,7 @@
                         }
                     });
 			    	if(json.result){
+			    		$("#tb").datagrid("reload");
 			    		$('#saveBtn').linkbutton({
 			    				text : "下一步",
 			    				onClick : function(){
@@ -250,12 +276,6 @@
 			    	var json = eval("("+data+")");
 			    	if(json.result){
 			    		$("#tb").datagrid("reload");
-			    		$('#saveBtn').linkbutton({
-			    			text : "设置试题",
-			    			onClick : function(){
-			    				location.href = json.url;
-			    			}
-			    		});
 			    	}                            
 			    	$.messager.show({
                         title:'Message',

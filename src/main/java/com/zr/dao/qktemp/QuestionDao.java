@@ -2,6 +2,7 @@ package com.zr.dao.qktemp;
 
 import java.util.List;
 
+import com.zr.model.Optionofquestion;
 import com.zr.model.Question;
 import com.zr.model.Type;
 
@@ -24,7 +25,20 @@ public interface QuestionDao {
 	 * @return
 	 */
 	int getQustionByTypeIdAndKey(int start, int size, int typeId,String key,List<Question> questionList);
-	
+
+	/**
+	 * 是否有选项
+	 * @param questionId
+	 * @return
+	 */
+	List<Optionofquestion> hasOption(int questionId);
+
+	/**
+	 * 批量删除多门考试的试题
+	 * 
+	 * @param examIds 多门考试
+	 */
+	boolean removeAllQuestionOfExam(int[] examIds);
 	
 	
 }

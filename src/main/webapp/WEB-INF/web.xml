@@ -295,4 +295,22 @@
     <servlet-name>EditUser</servlet-name>
     <servlet-class>com.zr.action.EditUserAction</servlet-class>
   </servlet>
+  <!-- 进入设置考题界面 -->
+  <servlet-mapping>
+    <servlet-name>EMSIntoSetQuestion</servlet-name>
+    <url-pattern>/ems/intoSetQuestion</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EMSIntoSetQuestion</servlet-name>
+    <servlet-class>com.zr.action.ems.IntoSetQuestionAction</servlet-class>
+  </servlet>
+  	<!-- 拍摄 -->
+	<servlet>
+		<servlet-name>WebCam</servlet-name>
+		<servlet-class>com.zr.action.ems.image.WebCamAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WebCam</servlet-name>
+		<url-pattern>/webcam.do</url-pattern>
+	</servlet-mapping>
 </web-app>

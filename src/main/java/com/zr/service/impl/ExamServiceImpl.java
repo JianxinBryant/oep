@@ -146,6 +146,24 @@ public class ExamServiceImpl implements ExamService {
 				list.add(str);
 			}
 		}
+		}
+		return examDao.setExamQuestions(insertQuestionList, updateQuestionList);
+	}
+
+	/**
+	 * 去除两个数组中相同的值并返回一个新的数组
+	 * 
+	 * @param arr1
+	 * @param arr2
+	 * @return
+	 */
+	private static Integer[] arrContrast(int[] arr1, int[] arr2) {
+		List<Integer> list = new LinkedList<Integer>();
+		for (Integer str : arr1) { // 处理第一个数组
+			if (!list.contains(str)) {
+				list.add(str);
+			}
+		}
 		for (Integer str : arr2) { // 如果第二个数组存在和第一个数组相同的值，就删除
 			if (list.contains(str)) {
 				list.remove(str);

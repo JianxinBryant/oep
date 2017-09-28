@@ -5,6 +5,53 @@
 	var size=3;
 	var showpage=5;
 $(function(){
+	$("#mo").hide();
+	$("#btn").click(function(){
+        $("#c").table2excel({
+            exclude: ".noExl",
+            name: "Excel Document Name",
+            filename: "myFileName",
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true
+        });
+        $("#c").empty();
+    });
+	$("#pri").click(function(){
+		 $('#c').jqprint({  
+             debug: false,            
+             importCSS: true,         
+             printContainer: true,    
+             operaSupport: false      
+         })  
+	 });
+	$("#cancel").click(function(){
+       $("#c").empty();
+    });
+	$("#show").click(function(){
+		$.ajax({
+			url : 'queryscore',
+			type : 'post',
+			data : {
+				'sname' : $("h3").text(),
+				'query' : 1,
+				'start' : 1,
+				'size' : size
+			},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				$("#c").append("<tr><td>用户姓名</td><td>考试名</td><td>分数</td></tr>");
+				var all1 = data.allscore;
+				console.log(all1);
+				$.each(all1, function(i, v) {
+					$("#c").append(
+							"<tr><td>" + v.uname + "</td><td>" + v.ename
+									+ "</td><td>" + v.score + "</td></tr>")
+				})
+			}
+		})
+    });
 	function fenye(){
 		$("#b").append("<button class='bs btn btn-default' id='first'>" + "首页" + "</button>");
 		$("#b").append("<button class='bs btn btn-default' id='pre'>" + "上一页" + "</button>");
@@ -58,7 +105,7 @@ $(function(){
 		url : 'personinfo',
 		type : 'post',
 		data : {
-			'sname' : $("h4").text()
+			'sname' : $("h3").text()
 		},
 		dataType : 'json',
 		success : function(data) {
@@ -69,6 +116,7 @@ $(function(){
 		}
 	})
 	$('#query').click(function() {
+		$("#mo").show();
 		$("#a").empty();
 		$("#b").empty();
 		$("#chdiv1").empty();
@@ -77,7 +125,7 @@ $(function(){
 			url : 'queryscore',
 			type : 'post',
 			data : {
-				'sname' : $("h4").text(),
+				'sname' : $("h3").text(),
 				'query' : 1,
 				'start' : 1,
 				'size' : size
@@ -108,7 +156,7 @@ $(function(){
 					labels :lab,
 					datasets : [
 					            {
-					            	label: $("h4").text()+'成绩',
+					            	label: $("h3").text()+'成绩',
 					            	backgroundColor : "rgba(57,233,246,0.5)",
 					            	borderColor : "rgba(220,220,220,1)",
 					    			data : sco
@@ -153,7 +201,7 @@ $(function(){
 						url : 'queryscore',
 						type : 'post',
 						data : {
-							'sname' : $("h4").text(),
+							'sname' : $("h3").text(),
 							'query' : 1,
 							'start' : page,
 							'size' : size

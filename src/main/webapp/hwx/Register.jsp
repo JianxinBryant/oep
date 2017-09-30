@@ -21,7 +21,7 @@
 			$("#email-nullerror").css("display", "none");
 			$("#email-checkerror").css("display", "none");
 		});
-		
+
 		<!--判断两次密码是否一致-->
 		$("#conPsw").focusout(function() {
 			$.ajax({
@@ -83,13 +83,13 @@
 		$("#registersubmit").click(function() {
 			if ($("#userName").val() == '') {
 				alert("用户名不能为空！");
-			}else if($("#conPassword").val() == ''){
+			} else if ($("#conPassword").val() == '') {
 				alert("密码不能为空！");
-			}else if($("#email").val() == ''){
+			} else if ($("#email").val() == '') {
 				alert("邮箱不能为空！");
-			}else if ($("#telephone").val() == '') {
+			} else if ($("#telephone").val() == '') {
 				alert("手机号不能为空！");
-			}else {
+			} else {
 
 				$.ajax({
 					url : "${pageContext.request.contextPath}/hwx/register",
@@ -99,14 +99,14 @@
 						userName : $("#userName").val(),
 						password : $("#password").val(),
 						email : $("#email").val(),
-						telephone:$("#telephone").val()
+						telephone : $("#telephone").val()
 					},
 					dataType : "json",
 					success : function(data) {
 						if (data == true) {
 							alert("注册成功")
-							location.href="Login.jsp"
-						}else{
+							location.href = "Login.jsp"
+						} else {
 							alert("注册失败")
 						}
 					},
@@ -119,55 +119,68 @@
 </script>
 
 </head>
-<body style="background-color: #7EB0DB">
-	<div class="container">
+<body style="background-image: url('img/register.jpg');">
+	<div
+		style="background-color: black; margin: 0; min-height: 985px; width: 100%; position: absolute; opacity: 0.3; z-index: 1"></div>
+	<div class="container"
+		style="position: absolute; z-index: 2; margin-left: 17%">
 		<div class="row">
-			<div style="margin-top: 50px; margin-left: 42%">
-				<h1>欢&nbsp;迎&nbsp;注&nbsp;册</h1>
+			<div style="margin-top: 50px; margin-left: 45%">
+				<h1 style="color: white;">欢&nbsp;迎&nbsp;注&nbsp;册</h1>
 			</div>
 			<div class="col-md-3"></div>
 			<div class="col-md-6" style="margin-top: 50px">
-
-				<form action="register" method="post" class="form-horizontal">
-					<div class="form-group">
-						<label class="col-sm-0 control-label">用户名:</label> <input
-							type="text" id="userName" placeholder="请输入用户名"
-							class="form-control">
+				<div
+					style="background-color: white; height: 600px; width: 700px; margin-left: -30px; border-radius: 10px; opacity: 0.8">
+					<div
+						style="width: 450px; height: 250px; position: absolute; left: 110px; margin-top: 60px;">
+						<form action="register" method="post" class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-0 control-label">用户名:</label> <input
+									type="text" id="userName" placeholder="请输入用户名"
+									class="form-control">
+							</div>
+							<div class="form-group">
+								<label class="col-sm-0 control-label">密码:</label> <input
+									type="password" id="password" placeholder="请输入密码"
+									class="form-control">
+								<div id="psw-nullerror" style="color: red; display: none"
+									class="alert alert-danger">密码不能为空！</div>
+							</div>
+							<div class="form-group" id="conPsw">
+								<label class="col-sm-0 control-label">确认密码:</label> <input
+									type="password" placeholder="请确认密码" class="form-control"
+									id="conPassword">
+								<div id="conpsw-nullerror" style="color: red; display: none"
+									class="alert alert-danger">密码不能为空！</div>
+								<div id="conpsw-valierror" style="color: red; display: none"
+									class="alert alert-danger">两次密码输入不一致！</div>
+							</div>
+							<div class="form-group" id="EMail">
+								<label class="col-sm-0 control-label">E-mail:</label> <input
+									type="text" id="email" placeholder="请输入e-mail"
+									class="form-control">
+								<div id="email-nullerror" style="color: red; display: none"
+									class="alert alert-danger">邮箱地址不能为空！</div>
+								<div id="email-checkerror" style="color: red; display: none"
+									class="alert alert-danger">邮箱地址不合法！</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-0 control-label">手机号：</label> <input
+									type="text" id="telephone" placeholder="请输入手机号"
+									class="form-control">
+							</div>
+							<br />
+							<div align="center">
+								<input type="button" value="提交注册" class="btn btn-success"
+									id="registersubmit">
+							</div>
+						</form>
+						<br />
+						<div align="center">
+							已有账号？<a href="Login.jsp" style="color: #000099">点击直接登录</a>
+						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-sm-0 control-label">密码:</label> <input
-							type="password" id="password" placeholder="请输入密码"
-							class="form-control">
-						<div id="psw-nullerror" style="color: red; display: none" class="alert alert-danger">密码不能为空！</div>
-					</div>
-					<div class="form-group" id="conPsw">
-						<label class="col-sm-0 control-label">确认密码:</label> <input
-							type="password" placeholder="请确认密码" class="form-control"
-							id="conPassword">
-						<div id="conpsw-nullerror" style="color: red; display: none" class="alert alert-danger">密码不能为空！</div>
-						<div id="conpsw-valierror" style="color: red; display: none" class="alert alert-danger">两次密码输入不一致！</div>
-					</div>
-					<div class="form-group" id="EMail">
-						<label class="col-sm-0 control-label">E-mail:</label> <input
-							type="text" id="email" placeholder="请输入e-mail"
-							class="form-control">
-						<div id="email-nullerror" style="color: red; display: none" class="alert alert-danger">邮箱地址不能为空！</div>
-						<div id="email-checkerror" style="color: red; display: none" class="alert alert-danger">邮箱地址不合法！</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-0 control-label">手机号：</label> <input
-							type="text" id="telephone" placeholder="请输入手机号"
-							class="form-control">
-					</div>
-					<br />
-					<div align="center">
-						<input type="button" value="提交注册" class="btn btn-success"
-							id="registersubmit">
-					</div>
-				</form>
-				<br />
-				<div align="center">
-					已有账号？<a href="Login.jsp" style="color: #000099">点击直接登录</a>
 				</div>
 			</div>
 		</div>

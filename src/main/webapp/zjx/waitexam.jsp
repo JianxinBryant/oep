@@ -26,7 +26,7 @@
         <li role="presentation"><a href="${pageContext.request.contextPath}/llj/personinfo.jsp">个人信息</a></li>
         <li role="presentation" class="active"><a href="#" style="margin:0px 200px 0px 0px">等待考试</a></li>
         <li role="presentation"><h4 id="currenttime" style="margin-right: 50px; color: red"></h4></li>
-        <li role="presentation"><h4>名字</h4></li>
+       
     </ul>
 </div>
 <div id="body">

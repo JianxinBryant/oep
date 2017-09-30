@@ -38,8 +38,7 @@
 			<li role="presentation"><a href="${pageContext.request.contextPath}/zjx/myexam.jsp">我的考试</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/llj/personinfo.jsp"
 				style="margin: 0px 400px 0px 0px">个人信息</a></li>
-			<li role="presentation"><a href="#">登录</a></li>
-			<li role="presentation"><a href="#">注册</a></li>
+			
 		</ul>
 	</div>
 	<div id="img">
@@ -53,17 +52,17 @@
 			<!-- 轮播（Carousel）项目 -->
 			<div class="carousel-inner">
 				<div class="item active">
-					<img src="imag/IMG_0978.JPG"
+					<img src="${pageContext.request.contextPath}/statics/imgs/7.png"
 						style="width: 400px; height: 200px; margin: auto"
 						alt="First slide">
 				</div>
 				<div class="item">
-					<img src="imag/timg.jpg"
+					<img src="${pageContext.request.contextPath}/statics/imgs/5.png"
 						style="width: 400px; height: 200px; margin: auto"
 						alt="Second slide">
 				</div>
 				<div class="item">
-					<img src="imag/IMG_0978.JPG"
+					<img src="${pageContext.request.contextPath}/statics/imgs/6.jpg"
 						style="width: 400px; height: 200px; margin: auto"
 						alt="Third slide">
 				</div>

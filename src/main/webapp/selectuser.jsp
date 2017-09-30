@@ -23,7 +23,8 @@ $(function(){
 		url:"${pageContext.request.contextPath}/selectUser",
 	    title:"用户管理",
 	    queryParams : {
-	    	userkey : $("#userkeybox").val()
+	    	userkey : $("#userkeybox").val(),
+	    	boxvalue: $("#userth").combobox('getValue'),
 		},
 		pageNumber:1,			/* 初始化页码 */
 		pageSize:5,				/* 初始化页面大小 */
@@ -41,16 +42,72 @@ $(function(){
 	    ctrlSelect:true,		/* 按住Ctrl多选 */
 	    pagination:true			/* 显示分页工具栏,出现page,rows */
 	});  
-	
+	/* 下拉列表选项*/
+	$('#userth').combobox({
+		valueField: 'label',
+		textField: 'value',
+		data: [{
+			label: '',
+			value: '--请选择类型--'
+		},{
+			label: 'u_name',
+			value: '用户名'
+		},{
+			label: 'u_telephone',
+			value: '联系电话'
+		},{
+			label: 'u_email',
+			value: '邮箱'
+		},{
+			label: 'u_registertime',
+			value: '注册时间'
+		}],
+		//默认第一项
+		onBeforeLoad:function(){
+			var val = $(this).combobox("getData");
+            for (var item in val[0]) {
+                if (item == "label") {
+                    $(this).combobox("select", val[0][item]);
+                }
+            }
+		},
+		 //获取下拉框中被选中的值
+		onSelect: function(param){
+			$("#userkeybox").textbox({
+				required: false ,
+			});
+			$("#userkeybox").textbox('clear');
+			$('#usertb').datagrid("reload",{ 
+    	    		userkey :"",
+        			boxvalue : "",
+    	    	});
+			 var boxvalue =$(this).combobox('getValue'); 
+			if(boxvalue=="u_registertime"){
+				 $("#userkeybox").textbox({
+					 required:"true" ,
+					 missingMessage:"输入格式为yyyy-MM-dd"
+				 });
+			}
+		}, 
+	})
 	/* 根据用户关键字查询用户信息 */
-	$('#searchbtn').linkbutton({    
+	$('#searchbtn').linkbutton({  
 	    iconCls: 'icon-search' ,
 	    url:"${pageContext.request.contextPath}/selectUser",
 	    onClick:function(){
-	    	//加载根据关键字搜索后的表格
-	    	$('#usertb').datagrid("reload",{ 
-	    		userkey : $("#userkeybox").val()
-	    	})
+	    	var userkey =  $("#userkeybox").textbox('getValue');
+    		var boxvalue = $('#userth').combobox('getValue');
+    		if(""==boxvalue){
+    			$.messager.alert('提示',"请选择要查询的类型");
+    		}else if(""==userkey){
+    			$.messager.alert('提示',"请输入需要查询的值");
+    		}else{
+    			//加载根据关键字搜索后的表格
+    	    	$('#usertb').datagrid("reload",{ 
+    	    		userkey : userkey,
+        			boxvalue : boxvalue,
+    	    	})
+    		}
 	    }
 	});  
 	
@@ -81,6 +138,8 @@ $(function(){
 		    					 $('#usertb').datagrid("reload");
 		    				}
 		    			})
+	    	   		 }else{
+	    	   			$('#usertb').datagrid('clearSelections');
 	    	   		 }    
 	    		}); 
 			}else{
@@ -105,24 +164,25 @@ $(function(){
 			}
 		}
 	})
+	
+	
 	//保存修改后的用户信息
-		$('#fm').form({  
-			url:"${pageContext.request.contextPath}/editUser",
-		    onSubmit: function(){ 
-		    	var isValid = $(this).form('validate');
-				if (!isValid){
-					$.messager.alert('提示',"请根据要求正确填写表单");
-				}
-				return isValid;	// 返回false终止表单提交
-		    },
-		    
-		    success:function(data){
-		    	var info=eval("("+data+")");
-		    	$.messager.alert('提示',info.msg);
-				$('#editwin').dialog('close');
-				$('#usertb').datagrid("reload");  
-		    }    
-		});  
+	$('#fm').form({  
+		url:"${pageContext.request.contextPath}/editUser",
+		onSubmit: function(){ 
+		    var isValid = $(this).form('validate');
+			if (!isValid){
+				$.messager.alert('提示',"请根据要求正确填写表单");
+			}
+			return isValid;	// 返回false终止表单提交
+		 },
+		 success:function(data){
+		    var info=eval("("+data+")");
+		    $.messager.alert('提示',info.msg);
+			$('#editwin').dialog('close');
+			$('#usertb').datagrid("reload");  
+		 }    
+	});  
 	$("#save").linkbutton({
 		onClick : function() {
 			console.log($("input[name='u_id']").val());
@@ -137,6 +197,7 @@ $(function(){
 				},
 	    	});
 			$('#fm').submit(); 
+			
 		}
 	})
 	
@@ -144,6 +205,7 @@ $(function(){
 	$("#cancel").linkbutton({
 		onClick : function() {
 			$('#editwin').dialog('close').dialog('center');
+			$('#usertb').datagrid('clearSelections');
 		}
 	})
 	
@@ -167,8 +229,35 @@ $(function(){
 	        },     
 	        message: '电子邮箱格式错误'    
 	    } 
-	}) 
+	})
+	
+	/* 返回按钮 */
+	$("#back").linkbutton({
+		url:"${pageContext.request.contextPath}/selectUser",
+	    onClick:function(){
+	    	//加载根据关键字搜索后的表格
+	    	$('#usertb').datagrid("reload",{ 
+	    		userkey : "",
+	    		boxvalue : ""
+	    	})
+	    	$("#userkeybox").textbox('clear');
+	    	$('#userth').combobox({
+	    		onBeforeLoad:function(){
+					var val = $(this).combobox("getData");
+		            for (var item in val[0]) {
+		                if (item == "label") {
+		                    $(this).combobox("select", val[0][item]);
+		                }
+		            }
+				},
+	    	})
+	    	
+	    }
+	})
+	
 })
+
+
 </script>
 
 <body>
@@ -181,8 +270,10 @@ $(function(){
         <a id="edit"  class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑用户</a>
         <a id="remove"  class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除用户</a>
         <div style="float:right">
-    		<input id="userkeybox" type="text"/>
+        	<input id="userth" name="userth" class="easyui-combobox" > 
+    		<input id="userkeybox" type="text" class="easyui-textbox" />
     		<a id="searchbtn"  class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
+    		<a id="back"  class="easyui-linkbutton" iconCls="icon-back" plain="true">返回</a>
     	</div>
     </div>
     

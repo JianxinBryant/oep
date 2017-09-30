@@ -16,22 +16,23 @@ public class UserDaoImpl_leiwei implements UserDao_leiwei{
 	 * 用户查询
 	 */ 
 	@Override
-	public int SelectUserInfoByUserkey(int start, int pageSize, String userkey, List<User> userlist) {
+	public int SelectUserInfoByUserkey(String boxvalue,int start, int pageSize, String userkey, List<User> userlist) {
 		int count = 0;//查询的总行数
 		userkey = '%'+userkey+'%';
+		String sql1 =" WHERE   `user`."+boxvalue+" LIKE ?";
 		StringBuffer sql = new StringBuffer("");
 		sql.append("SELECT COUNT(u_id)  ");
 		sql.append("FROM `user` ");
-		sql.append("WHERE   `user`.u_name LIKE ? OR `user`.u_telephone LIKE ? OR `user`.u_email LIKE ? OR `user`.u_registertime LIKE ? ");
+		if(""!=boxvalue){
+			sql.append(sql1);
+		}
 		Connection con = JDBCUtil.getConnection();
 		try {
 			PreparedStatement pst = con.prepareStatement(sql.toString());
-			pst.setString(1, userkey);
-			pst.setString(2, userkey);
-			pst.setString(3, userkey);
-			pst.setString(4, userkey);
+			if(""!=boxvalue){
+				pst.setString(1, userkey);		
+			}
 			ResultSet rs = pst.executeQuery();
-			
 			if(rs.next()){
 				 count = rs.getInt("COUNT(u_id)");
 			}
@@ -40,19 +41,24 @@ public class UserDaoImpl_leiwei implements UserDao_leiwei{
 			e.printStackTrace();
 		}
 		
-		StringBuffer sql1 = new StringBuffer("");
-		sql1.append("select `user`.u_id,`user`.u_name,`user`.u_telephone,`user`.u_email,`user`.u_registertime  ");
-		sql1.append("FROM `user` ");
-		sql1.append("WHERE   `user`.u_name LIKE ? OR `user`.u_telephone LIKE ? OR `user`.u_email LIKE ? OR `user`.u_registertime LIKE ? ");
-		sql1.append("LIMIT ?, ?");
+		StringBuffer sql2 = new StringBuffer("");
+		sql2.append("select `user`.u_id,`user`.u_name,`user`.u_telephone,`user`.u_email,`user`.u_registertime  ");
+		sql2.append("FROM `user` ");
+		if(""!=boxvalue){
+			sql2.append(sql1);
+		}
+		sql2.append("LIMIT ?, ?");
 		try {
-			PreparedStatement pst1 = con.prepareStatement(sql1.toString());
-			pst1.setString(1, userkey);
-			pst1.setString(2, userkey);
-			pst1.setString(3, userkey);
-			pst1.setString(4, userkey);
-			pst1.setInt(5, start);
-			pst1.setInt(6, pageSize);
+			PreparedStatement pst1 = con.prepareStatement(sql2.toString());
+			if(""!=boxvalue){
+				pst1.setString(1, userkey);
+				pst1.setInt(2, start);
+				pst1.setInt(3, pageSize);
+			}else{
+				pst1.setInt(1, start);
+				pst1.setInt(2, pageSize);
+			}
+			
 			ResultSet rs1 = pst1.executeQuery();
 			while(rs1.next()){
 				User user = new User();
@@ -96,9 +102,8 @@ public class UserDaoImpl_leiwei implements UserDao_leiwei{
 		//删除用户信息
 		StringBuffer sql1 = new StringBuffer("");
 		sql1.append("DELETE from `user` WHERE u_id = ? ");
-		Connection con1 = JDBCUtil.getConnection();
 		try {
-			PreparedStatement ps = con1.prepareStatement(sql1.toString());
+			PreparedStatement ps = con.prepareStatement(sql1.toString());
 			for (Object i : ids) {
 				String i1= (String) i;
 				int i2 = Integer.parseInt(i1);

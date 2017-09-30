@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import com.zr.dao.UserDao_hwx;
 import com.zr.dao.impl.UserDaoImpl_hwx;
+import com.zr.service.UserService;
+import com.zr.service.impl.UserServiceImpl;
 
 /**
 *@author VerSion
@@ -19,6 +21,7 @@ import com.zr.dao.impl.UserDaoImpl_hwx;
 @SuppressWarnings("serial")
 public class LoginAction extends HttpServlet{
 	UserDao_hwx login = new UserDaoImpl_hwx();
+	UserService us = new UserServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,7 +34,10 @@ public class LoginAction extends HttpServlet{
 		String keyINpsw = req.getParameter("password");
 		String identifyingcode = req.getParameter("idtfcode");
 		
+		int u_id = us.getU_idByUname(userName);
 		HttpSession session = req.getSession();
+		session.setAttribute("u_id", u_id);
+		session.setAttribute("u_name", userName);
 		
 		String upsw = login.Getpswbyuname(userName);
 		if ((keyINpsw.equals(upsw))&&(session.getAttribute("codevalue").equals(identifyingcode))) {

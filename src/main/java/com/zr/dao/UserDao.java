@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.zr.model.User;
 
+import net.sf.json.JSONArray;
+
 public interface UserDao {
 	/**
 	 * 根据用户关键字分页查询用户信息,获得总行数count
@@ -26,4 +28,6 @@ public interface UserDao {
 	 * @param user
 	 */
 	public int editUser(User user);
+	
+	public JSONArray getUserofscoreAndExam(int u_id);
 }

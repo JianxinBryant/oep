@@ -19,8 +19,9 @@ public class Exam_questionDaoImpl implements Exam_questionDao{
 		Exam_question exam_question = new Exam_question();
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("select * from exam_question where e_id = ? limit ?,?");
+		PreparedStatement pre = null;
 		try {
-			PreparedStatement pre = con.prepareStatement(sql.toString());
+			pre = con.prepareStatement(sql.toString());
 			pre.setInt(1, e_id);
 			pre.setInt(2, start);
 			pre.setInt(3, size);
@@ -34,6 +35,8 @@ public class Exam_questionDaoImpl implements Exam_questionDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pre, con);
 		}
 		
 		return exam_question;
@@ -43,8 +46,9 @@ public class Exam_questionDaoImpl implements Exam_questionDao{
 	public int getQuestionNumByE_id(int e_id) {
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("select count(exam_question.q_id) qusetionnum from exam_question where e_id = ?");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, e_id);
 			ResultSet set = pst.executeQuery();
 			if(set.next()){
@@ -54,6 +58,8 @@ public class Exam_questionDaoImpl implements Exam_questionDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		return qusetionnum;
 	}

@@ -34,9 +34,9 @@
 			<li role="presentation"><img src="imag/IMG_0978.JPG"
 				class="img-responsive"
 				style="width: 65px; height: 40px; margin: 0px 200px 0px 50px"></li>
-			<li role="presentation" class="active"><a href="#">首页</a></li>
-			<li role="presentation"><a href="#">我的考试</a></li>
-			<li role="presentation"><a href="#"
+			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/zjx/usermain.jsp">首页</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/zjx/myexam.jsp">我的考试</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/llj/personinfo.jsp"
 				style="margin: 0px 400px 0px 0px">个人信息</a></li>
 			<li role="presentation"><a href="#">登录</a></li>
 			<li role="presentation"><a href="#">注册</a></li>

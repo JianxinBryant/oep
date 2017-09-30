@@ -30,5 +30,7 @@ public interface UserDao_hwx {
 	 */
 	public String Getpswbyuname(String u_uname);
 	
+	public int getU_idByUname(String u_name);
+	
 	
 }

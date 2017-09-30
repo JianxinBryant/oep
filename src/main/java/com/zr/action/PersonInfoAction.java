@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.zr.model.User;
 import com.zr.service.PersonInfoService;
@@ -26,7 +27,10 @@ public class PersonInfoAction extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		resp.setCharacterEncoding("utf-8");
 		//System.out.println(req.getParameter("sname"));
-		String sname = req.getParameter("sname");
+//		String sname = req.getParameter("sname");
+		HttpSession session = req.getSession();
+		String sname = (String) session.getAttribute("u_name");
+		System.out.println(sname);
 		User user = ps.getUserInfo(sname);
 		JSONObject json = new JSONObject();
 		json.put("uname", user.getU_name());

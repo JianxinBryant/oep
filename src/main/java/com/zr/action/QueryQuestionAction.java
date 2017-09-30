@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.zr.model.Answerofuser;
 import com.zr.model.Exam_question;
@@ -42,10 +43,10 @@ public class QueryQuestionAction extends HttpServlet{
 		req.setCharacterEncoding("utf8");
 		resp.setCharacterEncoding("utf8");
 		//从session里得到考试id
-		int e_id = 1;
-		int u_id = 1;
+		HttpSession session = req.getSession();
+		int e_id = (int) session.getAttribute("e_id");
+		int u_id = (int) session.getAttribute("u_id");
 //		int page = 1;
-		System.out.println("qqqqid: " + req.getParameter("q_id"));
 		int page = Integer.parseInt(req.getParameter("page"));
 		int pageSize = 1;
 		

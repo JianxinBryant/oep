@@ -75,12 +75,17 @@ $(function(){
 		    beforeSend : function(XHR){
 		    	XHR.setRequestHeader("X-Requested-Width", "XMLHttpRequest");
 		    },
+		    dataType:'json',
 		    contentType: false, // 很重要
 		    traditional: true,
 		    processData:false,
 		    data: fd, // {"name":"zhangsan", "age": 28}
 		    success: function(data) {
-		    	console.log(data);
+		    	console.log(data.result);
+		    	if(data.result == false){
+		    		//console.log(data.similar);
+		    		alert("注意坐姿！目前相似度为： " + data.similar)
+		    	}
 		    }
 		});
     }

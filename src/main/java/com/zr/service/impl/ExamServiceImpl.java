@@ -131,23 +131,7 @@ public class ExamServiceImpl implements ExamService {
 		return examDao.setExamQuestions(insertQuestionList, updateQuestionList);
 	}
 
-	/**
-	 * 去除两个数组中相同的值并返回一个新的数组
-	 * 
-	 * @param arr1
-	 * @param arr2
-	 * @return
-	 */
-	private static Integer[] arrContrast(int[] arr1, int[] arr2) {
-		List<Integer> list = new LinkedList<Integer>();
-		for (Integer str : arr1) { // 处理第一个数组
-			if (!list.contains(str)) {
-				list.add(str);
-			}
-		}
-		}
-		return examDao.setExamQuestions(insertQuestionList, updateQuestionList);
-	}
+
 
 	/**
 	 * 去除两个数组中相同的值并返回一个新的数组
@@ -266,5 +250,8 @@ public class ExamServiceImpl implements ExamService {
 		} else {
 			return false;
 		}
+	}
+	public Exam getExamByE_id(int e_id) {
+		return examDao.getExamById(e_id);
 	}
 }

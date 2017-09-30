@@ -7,9 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.zr.dao.UserDao_hwx;
 import com.zr.dao.impl.UserDaoImpl_hwx;
+import com.zr.service.UserService;
+import com.zr.service.impl.UserServiceImpl;
 
 /**
  * @author VerSion
@@ -18,6 +22,7 @@ import com.zr.dao.impl.UserDaoImpl_hwx;
 @SuppressWarnings("serial")
 public class RegisterAction extends HttpServlet {
 	UserDao_hwx user = new UserDaoImpl_hwx();
+	UserService us = new UserServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,6 +44,10 @@ public class RegisterAction extends HttpServlet {
 		
 		
 		boolean res = user.UserRegister(userName, password, email, telephone);
+		int u_id = us.getU_idByUname(userName);
+		HttpSession session = req.getSession();
+		session.setAttribute("u_id", u_id);
+		session.setAttribute("u_name", userName);
 		
 		resp.setCharacterEncoding("utf8");
 		PrintWriter pw = resp.getWriter();

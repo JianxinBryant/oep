@@ -304,6 +304,11 @@ $(function(){
 			</div>
 		</div>  
 	</div>
+	
+	<div align="center">
+    <a href="${pageContext.request.contextPath}/llj/mainadmin.jsp"><button>返回</button></a>
+	<a href="${pageContext.request.contextPath}/hwx/Login.jsp"><button>退出</button></a>
+    </div>
 
 </body>
 </html>

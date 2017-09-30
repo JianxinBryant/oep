@@ -18,8 +18,9 @@ public class OptionofquestionDaoImpl implements OptionofquestionDao{
 		List<Optionofquestion> list = new ArrayList<Optionofquestion>();
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("select * from optionofquestion where q_id = ?");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			 pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, q_id);
 			ResultSet set = pst.executeQuery();
 			while(set.next()){
@@ -33,6 +34,8 @@ public class OptionofquestionDaoImpl implements OptionofquestionDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		return list;
 	}

@@ -89,4 +89,6 @@ public interface ExamService {
 	 * @kramer
 	 */
 	public boolean deleteExamByIds(int[] examIds);
+	
+	public Exam getExamByE_id(int e_id);
 }

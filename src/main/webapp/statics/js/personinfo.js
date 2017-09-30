@@ -4,6 +4,7 @@
 	var flag;
 	var size=3;
 	var showpage=5;
+	var username;
 $(function(){
 	$("#mo").hide();
 	$("#btn").click(function(){
@@ -113,6 +114,8 @@ $(function(){
 			$("#uemail").append(data.uemail);
 			$("#utelephone").append(data.utelephone);
 			$("#uregistertime").append(data.uregistertime);
+			username = data.uname;
+			$("#h3name").html(data.uname);
 		}
 	})
 	$('#query').click(function() {
@@ -125,7 +128,7 @@ $(function(){
 			url : 'queryscore',
 			type : 'post',
 			data : {
-				'sname' : $("h3").text(),
+				'sname' : $("#h3name").text(),
 				'query' : 1,
 				'start' : 1,
 				'size' : size

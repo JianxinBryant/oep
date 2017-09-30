@@ -337,5 +337,12 @@
             <a id="clearBtn" style="width:80px"></a>
         </div>
     </div>
+    
+    
+    	<div id="issue" style="z-index: 9999; position: fixed ! important;left:40%;top:80%">
+		<button id="back" style="position: absolute; width: 260px;margin:auto; left: 0px; right: 0; top: 0px;" onclick="location.href='${pageContext.request.contextPath}/llj/mainadmin.jsp'">
+			返回
+		</button>
+		</div>
 </body>
 </html>

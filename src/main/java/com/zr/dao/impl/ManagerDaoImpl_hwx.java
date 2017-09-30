@@ -20,8 +20,7 @@ public class ManagerDaoImpl_hwx implements ManagerDao_hwx{
 		StringBuffer sql = new StringBuffer();
 		Connection con = JDBCUtil.getConnection();
 		sql.append("SELECT m_id FROM manager WHERE m_name=? ");
-		PreparedStatement pst;
-
+		PreparedStatement pst = null;
 		try {
 			pst = con.prepareStatement(sql.toString());
 			pst.setString(1, m_name);
@@ -34,6 +33,8 @@ public class ManagerDaoImpl_hwx implements ManagerDao_hwx{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		return exist;
 	}
@@ -44,7 +45,7 @@ public class ManagerDaoImpl_hwx implements ManagerDao_hwx{
 		StringBuffer sql = new StringBuffer();
 		Connection con = JDBCUtil.getConnection();
 		sql.append("SELECT m_password FROM manager WHERE m_name=? ");
-		PreparedStatement pst;
+		PreparedStatement pst = null;
 		
 		try {
 			pst = con.prepareStatement(sql.toString());
@@ -56,6 +57,8 @@ public class ManagerDaoImpl_hwx implements ManagerDao_hwx{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		
 		return psw;

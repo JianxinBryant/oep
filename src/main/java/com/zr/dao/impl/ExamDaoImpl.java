@@ -39,9 +39,10 @@ public class ExamDaoImpl implements ExamDao {
 		String limit = "LIMIT " + start + "," + pageSize;
 		// 关键字处理
 		key = '%' + key + '%';
+		PreparedStatement ps = null;
 		try {
 			sql.append(selectCount).append(whereSql);
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			int i = 1;
 			ps.setString(i++, key);
 			ps.setString(i++, key);
@@ -103,9 +104,10 @@ public class ExamDaoImpl implements ExamDao {
 				sql.append("?,");
 			}
 		}
+		PreparedStatement ps = null;
 		// 信息sql部分
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			int i = 1;
 			for(int eid:examIds){
 				ps.setInt(i++, eid);
@@ -132,8 +134,9 @@ public class ExamDaoImpl implements ExamDao {
 		StringBuffer getCurrendExamIdSql = new StringBuffer();
 		getCurrendExamIdSql.append("SELECT MAX(exam.e_id) AS currentExamId FROM exam");
 		// 信息sql部分
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			int i = 1;
 			ps.setString(i++, exam.getE_name());
 			ps.setString(i++, exam.getE_starttime());
@@ -164,8 +167,9 @@ public class ExamDaoImpl implements ExamDao {
 		// sql语句
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT * FROM exam WHERE e_id = ?");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -182,8 +186,9 @@ public class ExamDaoImpl implements ExamDao {
 		List<Integer> ids = new ArrayList<>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT q_id FROM exam_question WHERE e_id = ? ORDER BY q_id");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			ps.setInt(1, examId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -191,6 +196,8 @@ public class ExamDaoImpl implements ExamDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(ps, con);
 		}
 		int[] questionIds = new int[ids.size()];
 		for (int i = 0; i < ids.size(); i++) {
@@ -204,10 +211,11 @@ public class ExamDaoImpl implements ExamDao {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO exam_question (e_id,q_id,score) VALUES (?,?,?)");
+		PreparedStatement ps = null;
 		try {
 			// 批量查询
 			con.setAutoCommit(false);
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			for (int i = 0; i < eqList.size(); i++) {
 				Exam_question eq = eqList.get(i);
 				ps.setInt(1, eq.getE_id());
@@ -231,8 +239,9 @@ public class ExamDaoImpl implements ExamDao {
 		sql.append(" SELECT question.q_id,t_id,q_content,q_answer ").append(" FROM question ")
 				.append(" INNER JOIN exam_question ").append(" ON question.q_id = exam_question.q_id ")
 				.append(" WHERE exam_question.e_id = ? ").append(" ORDER BY question.t_id");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			ps.setInt(1, examId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -254,9 +263,10 @@ public class ExamDaoImpl implements ExamDao {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM exam_question WHERE e_id = ? AND q_id = ?");
+		PreparedStatement ps = null;
 		try {
 			con.setAutoCommit(false);
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			for (int i = 0; i < ids.length; i++) {
 				ps.setInt(1, examId);
 				ps.setInt(2, ids[i]);
@@ -276,8 +286,9 @@ public class ExamDaoImpl implements ExamDao {
 		int score = -1;
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT score FROM exam_question WHERE e_id = ? AND q_id = ?");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			ps.setInt(1, examId);
 			ps.setInt(2, q_id);
 			ResultSet rs = ps.executeQuery();
@@ -300,8 +311,9 @@ public class ExamDaoImpl implements ExamDao {
 				.append("FROM exam_question ").append("INNER JOIN question ON exam_question.q_id = question.q_id ")
 				.append("INNER JOIN type ON type.t_id = question.t_id ").append("WHERE exam_question.e_id = ? ")
 				.append("GROUP BY question.t_id ").append("ORDER BY question.t_id ");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			ps.setInt(1, examId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -324,10 +336,11 @@ public class ExamDaoImpl implements ExamDao {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE exam_question SET score = ? WHERE e_id = ? AND q_id = ?");
+		PreparedStatement ps = null;
 		try {
 			// 批量更新
 			con.setAutoCommit(false);
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			for (int i = 0; i < eqList.size(); i++) {
 				Exam_question eq = eqList.get(i);
 				ps.setInt(1, eq.getScore());
@@ -366,8 +379,9 @@ public class ExamDaoImpl implements ExamDao {
 		sql.append("UPDATE exam ").append("SET e_name = ?,e_starttime=?, ")
 			.append("e_endtime=?,e_total=? ")
 			.append("WHERE e_id = ?");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			ps = con.prepareStatement(sql.toString());
 			int i = 1;
 			ps.setString(i++, exam.getE_name());
 			ps.setString(i++, exam.getE_starttime());
@@ -389,8 +403,9 @@ public class ExamDaoImpl implements ExamDao {
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE exam ").append("SET e_state = ?")
 			.append("WHERE e_id = ?");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			 ps = con.prepareStatement(sql.toString());
 			int i = 1;
 			ps.setString(i++, "true");
 			ps.setInt(i++, examId);
@@ -408,8 +423,9 @@ public class ExamDaoImpl implements ExamDao {
 		Exam exam = new Exam();
 		Connection con = JDBCUtil.getConnection();
 		StringBuffer sql = new StringBuffer("SELECT exam.e_starttime,exam.e_endtime FROM exam WHERE e_id = ?");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, e_id);
 			ResultSet set = pst.executeQuery();
 			if(set.next()){

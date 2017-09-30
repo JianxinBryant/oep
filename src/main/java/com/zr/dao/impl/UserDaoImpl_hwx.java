@@ -23,7 +23,7 @@ public class UserDaoImpl_hwx implements UserDao_hwx {
 				.append(" VALUES (?,?,?,?)");
 
 		Connection con = JDBCUtil.getConnection();
-		PreparedStatement pst;
+		PreparedStatement pst = null;
 
 		try {
 			pst = con.prepareStatement(sql.toString());
@@ -36,6 +36,8 @@ public class UserDaoImpl_hwx implements UserDao_hwx {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 
 		return result;
@@ -48,7 +50,7 @@ public class UserDaoImpl_hwx implements UserDao_hwx {
 		StringBuffer sql = new StringBuffer();
 		Connection con = JDBCUtil.getConnection();
 		sql.append("SELECT u_id FROM user WHERE u_name=? ");
-		PreparedStatement pst;
+		PreparedStatement pst = null;
 
 		try {
 			pst = con.prepareStatement(sql.toString());
@@ -62,6 +64,8 @@ public class UserDaoImpl_hwx implements UserDao_hwx {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		return exist;
 
@@ -75,7 +79,7 @@ public class UserDaoImpl_hwx implements UserDao_hwx {
 		StringBuffer sql = new StringBuffer();
 		Connection con = JDBCUtil.getConnection();
 		sql.append("SELECT u_password FROM user WHERE u_name=? ");
-		PreparedStatement pst;
+		PreparedStatement pst = null;
 		
 		try {
 			pst = con.prepareStatement(sql.toString());
@@ -87,9 +91,34 @@ public class UserDaoImpl_hwx implements UserDao_hwx {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		
 		return psw;
+	}
+
+	@Override
+	public int getU_idByUname(String u_name) {
+		int u_id = 0;
+		Connection con = JDBCUtil.getConnection();
+		StringBuffer sql = new StringBuffer("select u_id from user where u_name = ?");
+		PreparedStatement pst = null;
+		try {
+			 pst = con.prepareStatement(sql.toString());
+			pst.setString(1, u_name);
+			ResultSet set = pst.executeQuery();
+			while(set.next()){
+				u_id = set.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
+		}
+		return u_id;
+		
 	}
 
 }

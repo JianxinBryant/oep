@@ -35,12 +35,10 @@
 			<li role="presentation"><img src="imag/IMG_0978.JPG"
 				class="img-responsive"
 				style="width: 65px; height: 40px; margin: 0px 200px 0px 50px"></li>
-			<li role="presentation"><a href="#">首页</a></li>
-			<li role="presentation"><a href="#">我的考试</a></li>
-			<li role="presentation" class="active"><a href="#">个人信息</a></li>
-			<li role="presentation"><a href="#"
-				style="margin: 0px 200px 0px 0px">正在考试</a></li>
-			<li role="presentation"><h3>aaa</h3></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/zjx/usermain.jsp">首页</a></li>
+        	<li role="presentation"><a href="${pageContext.request.contextPath}/zjx/myexam.jsp">我的考试</a></li>
+        	<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/llj/personinfo.jsp">个人信息</a></li>
+			<li role="presentation"><h3 id="h3name"></h3></li>
 		</ul>
 	</div>
 	<div class="container">

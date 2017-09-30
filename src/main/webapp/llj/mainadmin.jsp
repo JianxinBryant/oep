@@ -35,7 +35,7 @@
 						<h3>考试管理</h3>
 						<p>有发布考试，取消考试，考试查询，修改考试这4个功能</p>
 						<p>
-							<a href="#" class="btn btn-primary" role="button">进入</a>
+							<a href="${pageContext.request.contextPath}/ems/searchExam.jsp" class="btn btn-primary" role="button">进入</a>
 						</p>
 					</div>
 				</div>
@@ -47,7 +47,7 @@
 						<h3>题库管理</h3>
 						<p>有增加题目，删除题目，修改题目，查询题目这4个功能</p>
 						<p>
-							<a href="#" class="btn btn-primary" role="button">进入</a>
+							<a href="${pageContext.request.contextPath}/zy/item.jsp" class="btn btn-primary" role="button">进入</a>
 						</p>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 						<h3>用户管理</h3>
 						<p>有用户查询，修改用户信息，删除用户这3个功能</p>
 						<p>
-							<a href="#" class="btn btn-primary" role="button">进入</a>
+							<a href="${pageContext.request.contextPath}/selectuser.jsp" class="btn btn-primary" role="button">进入</a>
 						</p>
 					</div>
 				</div>

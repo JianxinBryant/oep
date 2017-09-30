@@ -21,8 +21,9 @@ public class TypeDaoImpl implements TypeDao{
 		Type type = new Type();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT t_id,t_name FROM type WHERE t_id = ?");
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			 ps = con.prepareStatement(sql.toString());
 			ps.setInt(1, typeId);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
@@ -30,6 +31,8 @@ public class TypeDaoImpl implements TypeDao{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(ps, con);
 		}
 		return type;
 	}

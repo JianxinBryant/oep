@@ -21,9 +21,9 @@
 <div id="head" >
     <ul class="nav nav-pills">
         <li role="presentation"><img src="imag/IMG_0978.JPG" class="img-responsive" style="width: 65px;height: 40px;margin: 0px 200px 0px 50px"></li>
-        <li role="presentation"><a href="#">首页</a></li>
-        <li role="presentation"><a href="#">我的考试</a></li>
-        <li role="presentation"><a href="#">个人信息</a></li>
+        <li role="presentation"><a href="${pageContext.request.contextPath}/zjx/usermain.jsp">首页</a></li>
+        <li role="presentation"><a href="${pageContext.request.contextPath}/zjx/myexam.jsp">我的考试</a></li>
+        <li role="presentation"><a href="${pageContext.request.contextPath}/llj/personinfo.jsp">个人信息</a></li>
         <li role="presentation" class="active"><a href="#" style="margin:0px 200px 0px 0px">等待考试</a></li>
         <li role="presentation"><h4 id="currenttime" style="margin-right: 50px; color: red"></h4></li>
         <li role="presentation"><h4>名字</h4></li>
@@ -31,68 +31,81 @@
 </div>
 <div id="body">
     <div class="container" style="margin-top: 50px;height: 100%;border: 1px solid" >
-        <div>
-            <h2>考试须知</h2>
-            <h4>考试时间：<div id="testtime">2017/09/25,20:10:00 - 2017/09/26,00:00:00</div></h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-        </div>
+    	<div class="row">
+	        <div class="col-md-8">
+	            <h2>考试须知</h2>
+	            <h4>考试时间：<div id="testtime">${requestScope.examtime }</div></h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <button id='btn' class='btn btn-default'>进入考试</button>
+	        </div>
+	       	<div class="col-md-4" style="margin-top: 20px ; border: 1px solid">
+	       		<iframe src="${pageContext.request.contextPath }/ems/photograph.jsp" style="width: 100%;height:260px; "></iframe>
+	       	</div>
+    	</div>
 
     </div>
 </div>
 </body>
 <script>
     window.onload = function(){
+    	$("#btn").hide();
         showTime();
         function addZero(i){
             if(i<10){
                 i = "0" + i;
             }return i;
         }
-
 //        function checkStartOrEnd(){
 //            showTime();
 //
 //            setTimeout(checkStartOrEnd,1000);
 //        }
-
         function showTime() {
-            var testtime = document.getElementById("testtime").innerHTML.split(" - ")[1];
+            var starttime = document.getElementById("testtime").innerHTML.split(" - ")[0];
+            var endtime = document.getElementById("testtime").innerHTML.split(" - ")[1];
             var nowtime = new Date();
-            var endtime = new Date(testtime);
-            var lefttime = parseInt((endtime.getTime() - nowtime.getTime()) / 1000);
-            var d = parseInt(lefttime / (24 * 60 * 60));
-            var h = parseInt(lefttime / (60 * 60) % 24);
-            var m = parseInt(lefttime / 60 % 60);
-            var s = parseInt(lefttime % 60);
+            var starttimez= new Date(starttime);
+            var endtimez = new Date(endtime);
+            var lefttime1 = parseInt((starttimez.getTime() - nowtime.getTime()) / 1000);
+            var lefttime2 = parseInt((endtimez.getTime() - nowtime.getTime()) / 1000);
+            var d = parseInt(lefttime1 / (24 * 60 * 60));
+            var h = parseInt(lefttime1 / (60 * 60) % 24);
+            var m = parseInt(lefttime1 / 60 % 60);
+            var s = parseInt(lefttime1 % 60);
+            d = addZero(d);
             h = addZero(h);
             m = addZero(m);
             s = addZero(s);
             document.getElementById("currenttime").innerHTML = "考试开始倒计时    " + d + ":" + h + ":" + m + ":" + s;
-            if(m == 05 && s == 00){
+            if(m == 05 && s == 00 && h == 00 && d == 00){
                 alert("还剩5分钟开始！")
             }
-            if(lefttime <= 0){
-                var userid = 1;
-                document.getElementById("currenttime").innerHTML = "考试已结束";
-                $.ajax({
-                    url:'ExammingAction',
-                    type:'post',
-                    data:{'userid':userid},
-                    dataType:'json'
-                });
-                return;
+            if(lefttime1 <= 0 && lefttime2 >= 0){
+                document.getElementById("currenttime").innerHTML = "正在考试中";
+                $("#btn").show();
+            }else if(lefttime2 <= 0){
+            	document.getElementById("currenttime").innerHTML = "考试已结束";
+            	$("#btn").hide();
             }
             setTimeout(showTime,1000);
         }
+        
+        $("#btn").click(function(){
+        	$(location).attr('href', 'examming.jsp');
+        });
     }
+    
+    $("#btn").click(function(){
+    	$(location).attr('href', 'examming.jsp');
+    });
 </script>
 </html>

@@ -19,6 +19,33 @@
   	<servlet-name>queryscore</servlet-name>
   	<url-pattern>/llj/queryscore</url-pattern>
   </servlet-mapping>
+   <!-- 个人信息查询-->
+  <servlet>
+  	<servlet-name>personinfo</servlet-name>
+  	<servlet-class>com.zr.action.PersonInfoAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>personinfo</servlet-name>
+  	<url-pattern>/llj/personinfo</url-pattern>
+  </servlet-mapping>
+   <!-- 查询全部考试-->
+  <servlet>
+  	<servlet-name>queryallexam</servlet-name>
+  	<servlet-class>com.zr.action.QueryAllExamAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>queryallexam</servlet-name>
+  	<url-pattern>/zjx/queryallexam</url-pattern>
+  </servlet-mapping>
+  <!-- 报名考试-->
+  <servlet>
+  	<servlet-name>adduserexam</servlet-name>
+  	<servlet-class>com.zr.action.AddUserExamAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>adduserexam</servlet-name>
+  	<url-pattern>/zjx/adduserexam</url-pattern>
+  </servlet-mapping>
     <!-- 考试查询 -->
   <servlet-mapping>
     <servlet-name>EMSSearchAction</servlet-name>
@@ -183,6 +210,33 @@
   	<servlet-class>com.zr.action.QueryEtimeAction</servlet-class>
   </servlet>
   
+  <servlet-mapping>
+  	<servlet-name>queryUserExamAction</servlet-name>
+  	<url-pattern>/zjx/queryUserExamAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>queryUserExamAction</servlet-name>
+  	<servlet-class>com.zr.action.QueryUserExamAction</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>joinWaitExamAction</servlet-name>
+  	<url-pattern>/zjx/joinWaitExamAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>joinWaitExamAction</servlet-name>
+  	<servlet-class>com.zr.action.JoinWaitExamAction</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>insertAnswerActionF</servlet-name>
+  	<url-pattern>/zjx/insertAnswerActionF</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>insertAnswerActionF</servlet-name>
+  	<servlet-class>com.zr.action.InsertAnswerActionF</servlet-class>
+  </servlet>
+  
   <!-- 用户登录 -->
   <servlet-mapping>
     <servlet-name>loginAction</servlet-name>
@@ -313,4 +367,54 @@
 		<servlet-name>WebCam</servlet-name>
 		<url-pattern>/webcam.do</url-pattern>
 	</servlet-mapping>
+	
+	
+	  <!-- 增加试题 -->
+  <servlet-mapping>
+  	<servlet-name>additem</servlet-name>
+  	<url-pattern>/tiku/additem</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>additem</servlet-name>
+  	<servlet-class>com.zr.action.tiku.AddItem</servlet-class>
+  </servlet>
+  <!-- 搜索符合条件的试题（模糊） -->
+    <servlet-mapping>
+  	<servlet-name>searchitem</servlet-name>
+  	<url-pattern>/tiku/searchitem</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>searchitem</servlet-name>
+  	<servlet-class>com.zr.action.tiku.SearchItem</servlet-class>
+  </servlet>
+    <!-- 第一次进入按照q_id顺序显示所有试题 -->
+      <servlet-mapping>
+  	<servlet-name>showitem</servlet-name>
+  	<url-pattern>/tiku/showitem</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>showitem</servlet-name>
+  	<servlet-class>com.zr.action.tiku.showtheItem</servlet-class>
+  </servlet>
+  
+      <!-- 删除被选中的试题 -->
+      <servlet-mapping>
+  	<servlet-name>deleteitem</servlet-name>
+  	<url-pattern>/tiku/deleteitem</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>deleteitem</servlet-name>
+  	<servlet-class>com.zr.action.tiku.deleteitem</servlet-class>
+  </servlet>
+  
+    <!-- 存样图 -->
+	<servlet>
+		<servlet-name>PhotoGraph</servlet-name>
+		<servlet-class>com.zr.action.ems.image.PhotoGraphAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PhotoGraph</servlet-name>
+		<url-pattern>/photoGraph.do</url-pattern>
+	</servlet-mapping>
+  
 </web-app>

@@ -68,7 +68,7 @@ var currentexam;
 				var exams = data.exams;
 				fenye3();
 				$.each(exams, function(i, v) {
-					$("#a").append('<div class="col-md-3" style="margin: 5px 0px 5px 0px; height: 100%; border: 1px solid"><div style="width: 100%; height: 100px; margin: 20px">'+v.ename+'<br>'+'考试开始时间：'+v.e_starttime+'<br>'+'考试结束时间：'+v.e_endtime+'<br>'+'考试总分：'+v.e_total+'<br>'+'<button class="aa btn btn-primary" data-toggle="modal" data-target="#myModal" id='+v.ename+'>报名</button>'+'</div></div>')
+					$("#a").append('<div class="col-md-3" style="margin: 5px 0px 5px 0px; height: 100%; border: 1px solid"><div style="width: 100%; height: 140px; margin: 20px">'+v.ename+'<br>'+'考试开始时间：'+v.e_starttime+'<br>'+'考试结束时间：'+v.e_endtime+'<br>'+'考试总分：'+v.e_total+'<br>'+'<button class="aa btn btn-primary" data-toggle="modal" data-target="#myModal" id='+v.ename+'>报名</button>'+'</div></div>')
 				})
 			}
 		})
@@ -101,7 +101,7 @@ var currentexam;
 							$("#a").empty();
 							$("#b").empty();
 							$.each(exams, function(i, v) {
-								$("#a").append('<div class="col-md-3" style="margin: 5px 0px 5px 0px; height: 100%; border: 1px solid"><div style="width: 100%; height: 100px; margin: 20px">'+v.ename+'<br>'+'考试开始时间：'+v.e_starttime+'<br>'+'考试结束时间：'+v.e_endtime+'<br>'+'考试总分：'+v.e_total+'<br>'+'<button class="aa btn btn-primary" data-toggle="modal" data-target="#myModal" id='+v.ename+'>报名</button>'+'</div></div>')
+								$("#a").append('<div class="col-md-3" style="margin: 5px 0px 5px 0px; height: 100%; border: 1px solid"><div style="width: 100%; height: 140px; margin: 20px">'+v.ename+'<br>'+'考试开始时间：'+v.e_starttime+'<br>'+'考试结束时间：'+v.e_endtime+'<br>'+'考试总分：'+v.e_total+'<br>'+'<button class="aa btn btn-primary" data-toggle="modal" data-target="#myModal" id='+v.ename+'>报名</button>'+'</div></div>')
 							})
 							fenye3();
 						}

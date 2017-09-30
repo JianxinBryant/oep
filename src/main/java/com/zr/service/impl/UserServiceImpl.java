@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zr.dao.UserDao;
+import com.zr.dao.UserDao_hwx;
 import com.zr.dao.impl.UserDaoImpl;
+import com.zr.dao.impl.UserDaoImpl_hwx;
 import com.zr.model.User;
 import com.zr.service.UserService;
 
@@ -13,6 +15,7 @@ import net.sf.json.JSONObject;
 
 public class UserServiceImpl implements UserService{
 	UserDao udao = new UserDaoImpl();
+	UserDao_hwx userdao_hwx = new UserDaoImpl_hwx();
 	/**
 	 * 获取用户信息
 	 */
@@ -55,5 +58,15 @@ public class UserServiceImpl implements UserService{
 	public int editUser(User user) {
 		int i =udao.editUser(user);
 		return i;
+	}
+
+	@Override
+	public JSONArray getUserofscoreAndExam(int u_id) {
+		return udao.getUserofscoreAndExam(u_id);
+	}
+
+	@Override
+	public int getU_idByUname(String u_name) {
+		return userdao_hwx.getU_idByUname(u_name);
 	}
 }

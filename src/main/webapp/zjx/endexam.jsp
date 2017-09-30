@@ -9,6 +9,6 @@
 <body>
 
 	考试已结束！
-	<a>返回首页！</a>
+	<a href="${pageContext.request.contextPath}/zjx/myexam.jsp">返回首页</a>
 </body>
 </html>

@@ -27,8 +27,9 @@ public class UserDaoImpl_leiwei implements UserDao_leiwei{
 			sql.append(sql1);
 		}
 		Connection con = JDBCUtil.getConnection();
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			 pst = con.prepareStatement(sql.toString());
 			if(""!=boxvalue){
 				pst.setString(1, userkey);		
 			}
@@ -128,8 +129,9 @@ public class UserDaoImpl_leiwei implements UserDao_leiwei{
 		sql.append("SET u_name = ? ,u_telephone=? , u_email = ? ,  u_registertime = ? ");
 		sql.append("WHERE u_id =? ");
 		Connection con = JDBCUtil.getConnection();
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(sql.toString());
+			 ps = con.prepareStatement(sql.toString());
 				ps.setString(1, user.getU_name());
 				ps.setString(2, user.getU_telephone());
 				ps.setString(3, user.getU_email());
@@ -140,6 +142,8 @@ public class UserDaoImpl_leiwei implements UserDao_leiwei{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(ps, con);
 		}
 		return i;
 	}

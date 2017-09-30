@@ -16,8 +16,9 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("INSERT INTO answerofuser VALUES(?,?,?,?)");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, u_id);
 			pst.setInt(2, e_id);
 			pst.setInt(3, q_id);
@@ -26,6 +27,8 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 	}
 
@@ -33,8 +36,9 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 	public boolean checkAnswer(int u_id, int e_id, int q_id) {
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("select * from answerofuser where u_id=? AND e_id=? AND q_id=?");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, u_id);
 			pst.setInt(2, e_id);
 			pst.setInt(3, q_id);
@@ -46,6 +50,8 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		return false;
 	}
@@ -55,8 +61,9 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("DELETE FROM answerofuser WHERE u_id=? AND e_id=? AND q_id=?");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, u_id);
 			pst.setInt(2, e_id);
 			pst.setInt(3, q_id);
@@ -64,6 +71,8 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 	}
 
@@ -72,8 +81,9 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		Answerofuser answerofuser = new Answerofuser();
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("select * from answerofuser WHERE u_id=? AND e_id=? AND q_id=?");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, u_id);
 			pst.setInt(2, e_id);
 			pst.setInt(3, q_id);
@@ -88,6 +98,8 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		return answerofuser;
 	}

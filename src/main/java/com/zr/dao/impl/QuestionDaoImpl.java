@@ -19,8 +19,9 @@ public class QuestionDaoImpl implements QuestionDao{
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("SELECT question.q_id,t_id,q_content,q_answer FROM exam_question ");
 		sql.append("JOIN question ON exam_question.q_id=question.q_id WHERE e_id = ? limit ?,? ");
+		PreparedStatement pst = null;
 		try {
-			PreparedStatement pst = con.prepareStatement(sql.toString());
+			 pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, e_id);
 			pst.setInt(2, start);
 			pst.setInt(3, size);
@@ -35,6 +36,8 @@ public class QuestionDaoImpl implements QuestionDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
 		}
 		return question;
 	}

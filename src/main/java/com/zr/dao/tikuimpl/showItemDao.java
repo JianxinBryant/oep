@@ -173,7 +173,7 @@ public class showItemDao {
 		 public int adddatiItem(String q_content, String q_answer,int q_id) {
 			 Connection con = JDBCUtil.getConnection();
 			 PreparedStatement pst = null;
-			 StringBuffer sb = new StringBuffer("insert INTO question(q_id,t_id,q_content,q_answer) value(?,'4',?,?)");
+			 StringBuffer sb = new StringBuffer("insert INTO question(q_id,t_id,q_content,q_answer) value(?,'3',?,?)");
 			 try {
 				pst = con.prepareStatement(sb.toString());
 				pst.setInt(1, q_id);

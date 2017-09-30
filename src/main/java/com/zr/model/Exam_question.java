@@ -24,5 +24,10 @@ public class Exam_question {
 	public void setQ_id(int q_id) {
 		this.q_id = q_id;
 	}
+	@Override
+	public String toString() {
+		return "Exam_question [e_id=" + e_id + ", q_id=" + q_id + ", score=" + score + "]";
+	}
+	
 	
 }

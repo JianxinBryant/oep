@@ -14,6 +14,7 @@ public class Exam_questionServiceImpl implements Exam_questionService{
 	public Exam_question queryOneExam_questionByE_id(int e_id, int page, int pageSize) {
 		
 		Exam_question exam_question = eqd.queryOneExam_questionByE_id(e_id, (page-1)*pageSize, pageSize);
+		System.out.println("Service:"+exam_question.toString());
 		return exam_question;
 	}
 	@Override

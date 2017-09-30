@@ -51,9 +51,11 @@ public class QueryQuestionAction extends HttpServlet{
 		int pageSize = 1;
 		
 		Exam_question exam_question = eqs.queryOneExam_questionByE_id(e_id, page, pageSize);
+		System.out.println("Action:"+exam_question);
 		Question question = qs.queryOneQuestionByE_id(e_id, page, pageSize);
 		List<Optionofquestion> options = ooqs.queryOptionofquestionsByQ_id(question.getQ_id());
 		int questionnum = eqs.getQuestionNumByE_id(e_id);
+		System.out.println("u_id: "+e_id+" e_id: "+u_id+" page: "+page);
 		Answerofuser answerofuser = aous.selectAnswerofuser(u_id, e_id, page);
 		JSONObject json = new JSONObject();
 		System.out.println("下一页答案：" + answerofuser.getAnswer());
@@ -64,6 +66,7 @@ public class QueryQuestionAction extends HttpServlet{
 		json.put("page", page);
 		json.put("answerofuser", answerofuser);
 		PrintWriter pw = resp.getWriter();
+		System.out.println("JSON:"+json.toString());
 		pw.write(json.toString());
 	}
 }

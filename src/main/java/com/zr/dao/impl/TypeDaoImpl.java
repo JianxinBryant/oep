@@ -31,8 +31,6 @@ public class TypeDaoImpl implements TypeDao{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			JDBCUtil.closeJDBC(ps, con);
 		}
 		return type;
 	}

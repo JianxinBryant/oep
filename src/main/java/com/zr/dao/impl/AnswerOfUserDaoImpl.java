@@ -98,8 +98,6 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			JDBCUtil.closeJDBC(pst, con);
 		}
 		return answerofuser;
 	}

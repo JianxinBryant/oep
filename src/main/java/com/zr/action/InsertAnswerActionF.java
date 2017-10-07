@@ -31,8 +31,10 @@ public class InsertAnswerActionF extends HttpServlet{
 		HttpSession session = req.getSession();
 		int u_id = (int) session.getAttribute("u_id");
 		int e_id = (int) session.getAttribute("e_id");
-		int q_id = Integer.parseInt(req.getParameter("q_id"));
+		int q_id = Integer.parseInt(req.getParameter("qq_id"));
+		System.out.println("提交时的qq_id: " + q_id);
 		int t_id = Integer.parseInt(req.getParameter("t_id"));
+		System.out.println("提交时的t_id: " + t_id);
 		if(aous.checkAnswer(u_id, e_id, q_id)){
 			aous.delectAnswer(u_id, e_id, q_id);
 		}
@@ -43,12 +45,17 @@ public class InsertAnswerActionF extends HttpServlet{
 		}else if(ts.queryTypeByT_id(t_id).getT_name().equals("选择题")||ts.queryTypeByT_id(t_id).getT_name().equals("多选题")){
 			StringBuilder sb = new StringBuilder("");
 			String[] options = req.getParameterValues("option");
-			System.out.println(options[0]);
-			for(int i = 0; i < options.length; i++){
-				sb.append("," + options[i]);
+			if(options == null || (options!=null && options.length==0)){
+				System.out.println("选项为空！");
+			}else{
+				System.out.println(options[0]);
+				for(int i = 0; i < options.length; i++){
+					sb.append("," + options[i]);
+				}
+				String answer = sb.deleteCharAt(0).toString();
+				aous.commitAnswer(u_id, e_id, q_id, answer);
 			}
-			String answer = sb.deleteCharAt(0).toString();
-			aous.commitAnswer(u_id, e_id, q_id, answer);
+			
 		}
 	}
 	

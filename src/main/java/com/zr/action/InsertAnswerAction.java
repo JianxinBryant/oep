@@ -26,9 +26,10 @@ public class InsertAnswerAction extends HttpServlet{
 		HttpSession session = req.getSession();
 		int u_id = (int) session.getAttribute("u_id");
 		int e_id = (int) session.getAttribute("e_id");
-		int q_id = Integer.parseInt(req.getParameter("q_id"));
-		if(aous.checkAnswer(u_id, e_id, q_id)){
-			aous.delectAnswer(u_id, e_id, q_id);
+		int qq_id = Integer.parseInt(req.getParameter("qq_id"));
+		System.out.println("这是检测是否是添加的qq_id=" + qq_id);
+		if(aous.checkAnswer(u_id, e_id, qq_id)){
+			aous.delectAnswer(u_id, e_id,qq_id);
 		}
 		StringBuilder sb = new StringBuilder("");
 		String[] options = req.getParameterValues("option");
@@ -37,7 +38,7 @@ public class InsertAnswerAction extends HttpServlet{
 			sb.append("," + options[i]);
 		}
 		String answer = sb.deleteCharAt(0).toString();
-		aous.commitAnswer(u_id, e_id, q_id, answer);
+		aous.commitAnswer(u_id, e_id, qq_id, answer);
 		
 		
 	}

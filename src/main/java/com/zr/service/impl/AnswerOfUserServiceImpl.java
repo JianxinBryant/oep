@@ -32,9 +32,9 @@ public class AnswerOfUserServiceImpl implements AnswerOfUserService{
 
 
 	@Override
-	public Answerofuser selectAnswerofuser(int u_id, int e_id, int q_id) {
+	public Answerofuser selectAnswerofuser(int u_id, int e_id, int qq_id) {
 		// TODO Auto-generated method stub
-		return answerofuserdao.selectAnswerofuser(u_id, e_id, q_id);
+		return answerofuserdao.selectAnswerofuser(u_id, e_id, qq_id);
 	}
 
 	

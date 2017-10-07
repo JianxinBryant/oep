@@ -57,7 +57,8 @@ window.onload = function(){
 					$("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>正在考试</a></li>");
 				}else{
 					if(v.score == 0){
-						$("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>缺考</a></li>");
+						/* $("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>缺考</a></li>"); */
+						$("#ul").append("<h4>缺考</h4></li>");
 					}else{
 						$("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>已完成考试</a></li>");
 					}

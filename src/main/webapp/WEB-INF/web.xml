@@ -237,6 +237,15 @@
   	<servlet-class>com.zr.action.InsertAnswerActionF</servlet-class>
   </servlet>
   
+  <servlet-mapping>
+  	<servlet-name>queryAllQuestionAction</servlet-name>
+  	<url-pattern>/zjx/queryAllQuestionAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>queryAllQuestionAction</servlet-name>
+  	<servlet-class>com.zr.action.QueryAllQuestionAction</servlet-class>
+  </servlet>
+  
   <!-- 用户登录 -->
   <servlet-mapping>
     <servlet-name>loginAction</servlet-name>

@@ -205,6 +205,8 @@ padding: 0;
                 	<div id="question" style="height: 548px; margin: 20px 20px; border: 1px solid"></div>
                 </form>
                 <div id="q_id" hidden></div>
+                <div id="qq_id" hidden></div>
+                <div id="pq_id" hidden></div>
                 <div id="t_id" hidden></div>
                 <div id="answer" hidden></div>
                 <div id="page" hidden></div>
@@ -231,62 +233,91 @@ padding: 0;
 </div>
 </body>
 <script>
+	var jsonarr;
+	var queryjsonarr = function(jsonarr,nextpage){
+		$.each(jsonarr,function(i,v){
+			console.log(v.jsonpage+"~"+v.jsonq_id);
+			if(v.jsonpage == nextpage){
+				$("#qq_id").attr("value" , v.jsonq_id);//加入隐藏域
+				return false;
+			}
+		})
+	};
+	
+	var insertjsonarr = function(jsonarr,prepage){
+		$.each(jsonarr,function(i,v){
+			if(v.jsonpage == prepage){
+				$("#pq_id").attr("value" , v.jsonq_id);
+			}
+		})
+	}
     window.onload = function(){
-    	
 //        $("#iframe").width(100%);
+		$("#pq_id").attr("value" , 1);
 		$.ajax({
-			url:'queryQuestionAction',
-			data:{
-				'page' : 1,
-			},
+			 url:'queryAllQuestionAction',
 			dataType:'json',
-			success : function(data){
-				var exam_question = data.exam_question;
-				var question = data.question;
-				var options = data.options;
-				var questionnum = data.questionnum;
-				var page = data.page;
-				var currentanswer = data.answerofuser.answer;
-				console.log(currentanswer);
-				$("#q_id").attr("value" , question.q_id);//加入隐藏域
-				$("#t_id").attr("value" , question.t_id);//加入隐藏域
-				$("#page").attr("value" , page);//加入隐藏域
-				$("#questionnumz").attr("value" , questionnum);//加入隐藏域
-				for(var i=0; i < questionnum; i++){
-					$("#questionnum").append("<button class='btn btn-default but'>" + (i+1) + "</button>");
-				}
-				$("#question").append("<h3>"+page+"</h3><h3>"+question.q_content+"</h3>");
-				if(question.t_id==1){
-					
-					$.each(options, function(i, v){
-						$("#question").append("<input type='radio' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
-					})
-					radioischecked(currentanswer);
-					
-				}else if(question.t_id==2){
-					$.each(options, function(i, v){
-						$("#question").append("<input type='checkbox' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
-					})
-					checkboxischecked(currentanswer);
-				}else if(question.t_id==3){
-					$("#question").append("<textarea id='textareaz' name='textareaz' class='form-control' rows='3'></textarea> ");
-					textareaisempty(currentanswer);
-				}
-				
-				console.log("val: "+$("#q_id").attr("value"));
+			success:function(data){
+				jsonarr=data;
+				/* console.log(jsonarr)
+				console.log(jsonarr[0].jsonq_id); */
+				queryjsonarr(data,1);//page=1
 				$.ajax({
-					url:'queryEtimeAction',
-					success: function(data){
-						$("#testtime").html(data)
+					url:'queryQuestionAction',
+					data:{
+						/* 'qq_id' : $("#qq_id").attr("value"), */
+						'page' : 1
+					},
+					dataType:'json',
+					success : function(data){
+						var exam_question = data.exam_question;
+						var question = data.question;
+						var options = data.options;
+						var questionnum = data.questionnum;
+						var page = data.page;
+						var currentanswer = data.answerofuser.answer;
+						console.log(currentanswer);
+						$("#q_id").attr("value" , question.q_id);//加入隐藏域
+						$("#t_id").attr("value" , question.t_id);//加入隐藏域
+						$("#page").attr("value" , page);//加入隐藏域
+						$("#questionnumz").attr("value" , questionnum);//加入隐藏域
+						for(var i=0; i < questionnum; i++){
+							$("#questionnum").append("<button class='btn btn-default but'>" + (i+1) + "</button>");
+						}
+						$("#question").append("<h3>"+page+"</h3><h3>"+question.q_content+"</h3>");
+						if(question.t_id==1){
+							
+							$.each(options, function(i, v){
+								$("#question").append("<input type='radio' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
+							})
+							radioischecked(currentanswer);
+							
+						}else if(question.t_id==2){
+							$.each(options, function(i, v){
+								$("#question").append("<input type='checkbox' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
+							})
+							checkboxischecked(currentanswer);
+						}else if(question.t_id==3){
+							$("#question").append("<textarea id='textareaz' name='textareaz' class='form-control' rows='3'></textarea> ");
+							textareaisempty(currentanswer);
+						}
+						
+						$.ajax({
+							url:'queryEtimeAction',
+							success: function(data){
+								$("#testtime").html(data)
+							}
+						})
 					}
 				})
 			}
+			
 		})
 		
         $("#iframe").height(screen.availHeight-235);
         showTime();
 
-
+		console.log("jsonarr:" + jsonarr)
         function addZero(i){
             if(i<10){
                 i = "0" + i;
@@ -294,7 +325,8 @@ padding: 0;
             return i;
         }
 
-        function showTime() {
+        function showTime() 
+        {
             var testtime = document.getElementById("testtime").innerHTML.split(" - ")[1];
             var nowtime = new Date();
             var endtime = new Date(testtime);
@@ -315,7 +347,7 @@ padding: 0;
                 var userid = 1;
                 document.getElementById("currenttime").innerHTML = "考试已结束";
                 $.ajax({
-                	url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&q_id='+$("#q_id").attr("value"),
+                	url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&qq_id='+$("#pq_id").attr("value"),
                 	type:'POST',
                 	data:$('#formz').serialize(),
                 	async:false,
@@ -332,26 +364,29 @@ padding: 0;
         		'click',
         		'.but',
         		function(){
+        			queryjsonarr(jsonarr,$(this).html());
+        			insertjsonarr(jsonarr,parseInt($("#page").attr("value")));
         			$("#nextpage").attr("value" , $(this).html());//加入隐藏域
         			console.log("nextpage: "+ $("#nextpage").attr("value"));
+        			console.log("增加时的qq_id: " + $("#qq_id").attr("value"));
         			if($("#t_id").attr("value") == 1 || $("#t_id").attr("value") == 2){
         	    		
         	    		if($("#t_id").attr("value")==1 && $('input:radio[name="option"]:checked').val() == null){
-        	        		alert('什么都没选中1');
+        	        		alert('什么都没选中');
         	        		$.ajax({
         	        			url:'deleteAnswerAction',
         	    				data:{
-        	    					'q_id' : $("#q_id").attr("value")
+        	    					'qq_id' : $("#pq_id").attr("value")
         	    				},
         	    				success : function(data){
         	    					$.ajax({
                 	        			url:'queryQuestionAction',
                 	        			data:{
-                	        				'page' : $("#nextpage").attr("value"),
+                	        				'qq_id' : $("#qq_id").attr("value"),
+                	        				'page' : parseInt($("#nextpage").attr("value"))
                 	        			}, 
                 	        			dataType:'json',
                 	        			success : function(data){
-                	        				console.log("到底执行没有？");
                 	        				$("#questionnum").empty();
                 	        				$("#question").empty();
                 	        				var exam_question = data.exam_question;
@@ -368,7 +403,7 @@ padding: 0;
                 	        					$("#questionnum").append("<button class='btn btn-default but'>" + (i+1) + "</button>");
                 	        				}
                 	        				console.log("page= "+ page);
-                	        				$("#question").append("<h3>"+page+"</h3><h3>"+question.q_content+"</h3>");
+                	        				$("#question").append("<h3>"+$("#nextpage").attr("value")+"</h3><h3>"+question.q_content+"</h3>");
                 	        				if(question.t_id==1){
                 	        					$.each(options, function(i, v){
                 	            					$("#question").append("<input type='radio' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
@@ -396,13 +431,14 @@ padding: 0;
         	    			$.ajax({
         	    				url:'deleteAnswerAction',
         	    				data:{
-        	    					'q_id' : $("#q_id").attr("value")
+        	    					'qq_id' : $("#pq_id").attr("value")
         	    				},
         	    				success : function(data){
         	    					$.ajax({
                 	        			url:'queryQuestionAction',
                 	        			data:{
-                	        				'page' : $("#nextpage").attr("value"),
+                	        				'qq_id' : $("#qq_id").attr("value"),
+                	        				'page' : parseInt($("#nextpage").attr("value"))
                 	        			}, 
                 	        			dataType:'json',
                 	        			success : function(data){
@@ -421,7 +457,7 @@ padding: 0;
                 	        				for(var i=0; i < questionnum; i++){
                 	        					$("#questionnum").append("<button class='btn btn-default but'>" + (i+1) + "</button>");
                 	        				}
-                	        				$("#question").append("<h3>"+page+"</h3><h3>"+question.q_content+"</h3>");
+                	        				$("#question").append("<h3>"+$("#nextpage").attr("value")+"</h3><h3>"+question.q_content+"</h3>");
                 	        				if(question.t_id==1){
                 	        					$.each(options, function(i, v){
                 	            					$("#question").append("<input type='radio' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
@@ -444,18 +480,23 @@ padding: 0;
         	    					
         	    		}
         	    		else{
+        	    			/* insertjsonarr(jsonarr,#) */
         	    			$.ajax({
-        	        		url:'insertAnswerAction?q_id='+$("#q_id").attr("value"),
+        	        		url:'insertAnswerAction?qq_id='+$("#pq_id").attr("value"),
         	        		type:'POST',
         	        		data:$('#formz').serialize(),
         	        		async:false,
         	        		success:function(data){
-        	        			console.log("zzzz "+ $(this).html());
+        	        			/* console.log("jsonarr = "+jsonarr+"~"+parseInt($("#page").attr("value")));
+        	        			queryjsonarr(jsonarr,parseInt($("#page").attr("value")));
+        	        			console.log("查询时的qq_id: " + $("#qq_id").attr("value")); */
+        	        			
         	        			$.ajax({
         	                		/* url:'queryQuestionAction?'+'page='+$(this).html() */
         	                		url:'queryQuestionAction',
         	                		data:{
-        	            				'page' : $("#nextpage").attr("value"),
+        	                			/* 'qq_id' : $("#pq_id").attr("value"), */
+        	                			'page' : parseInt($("#nextpage").attr("value"))
         	            			}, 
         	            			dataType:'json',
         	            			success : function(data){
@@ -474,7 +515,7 @@ padding: 0;
         	            				for(var i=0; i < questionnum; i++){
         	            					$("#questionnum").append("<button class='btn btn-default but'>" + (i+1) + "</button>");
         	            				}
-        	            				$("#question").append("<h3>"+page+"</h3><h3>"+question.q_content+"</h3>");
+        	            				$("#question").append("<h3>"+$("#nextpage").attr("value")+"</h3><h3>"+question.q_content+"</h3>");
         	            				if(question.t_id==1){
         	            					$.each(options, function(i, v){
         	                					$("#question").append("<input type='radio' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
@@ -498,16 +539,21 @@ padding: 0;
         	    	}else if($("#t_id").attr("value") == 3){
         	    		console.log("进入简答题逻辑");
         	    		$.ajax({
-        	    			url:'insertAnswerAction1?q_id='+$("#q_id").attr("value"),
+        	    			url:'insertAnswerAction1?qq_id='+$("#pq_id").attr("value"),
         	        		type:'POST',
         	        		data:$('#formz').serialize(),
         	        		async:false,
         	        		success:function(){
+        	        			/* console.log("jsonarr = "+jsonarr+"~"+parseInt($("#page").attr("value")));
+        	        			queryjsonarr(jsonarr,parseInt($("#page").attr("value")));
+        	        			console.log("查询时的qq_id: " + $("#qq_id").attr("value")); */
+        	        			/* insertjsonarr(jsonarr,parseInt($("#page").attr("value"))); */
         	        			$.ajax({
                             		/* url:'queryQuestionAction?'+'page='+$(this).html() */
                             		url:'queryQuestionAction',
                             		data:{
-                        				'page' : $("#nextpage").attr("value"),
+                            			/* 'qq_id' : $("#qq_id").attr("value"), */
+                            			'page' : parseInt($("#nextpage").attr("value"))
                         			},
                         			dataType:'json',
                         			success : function(data){
@@ -526,7 +572,7 @@ padding: 0;
                         				for(var i=0; i < questionnum; i++){
                         					$("#questionnum").append("<button class='btn btn-default but'>" + (i+1) + "</button>");
                         				}
-                        				$("#question").append("<h3>"+page+"</h3><h3>"+question.q_content+"</h3>");
+                        				$("#question").append("<h3>"+$("#nextpage").attr("value")+"</h3><h3>"+question.q_content+"</h3>");
                         				if(question.t_id==1){
                         					$.each(options, function(i, v){
                             					$("#question").append("<input type='radio' id='"+ v.abcd + "' class='option' name='option' value="+v.abcd+"><span>"+v.abcd+". "+v.o_content+"<span><br>");
@@ -558,7 +604,7 @@ padding: 0;
 			console.log("他交卷了");
 			document.getElementById("currenttime").innerHTML = "考试已结束";
             $.ajax({
-            	url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&q_id='+$("#q_id").attr("value"),
+            	url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&qq_id='+$("#qq_id").attr("value"),
             	type:'POST',
             	data:$('#formz').serialize(),
             	async:false,
@@ -569,7 +615,7 @@ padding: 0;
 		}else{
 			console.log("他还没交卷");
 			$.ajax({
-				url:'insertExamActionF?t_id='+$("#t_id").attr("value")+'&&q_id='+$("#q_id").attr("value"),
+				url:'insertExamActionF?t_id='+$("#t_id").attr("value")+'&&qq_id='+$("#qq_id").attr("value"),
 				type:'POST',
             	data:$('#formz').serialize(),
             	async:false,
@@ -651,6 +697,8 @@ padding: 0;
     
     //点击提交按钮
     $("#btn").click(function(){
+    	queryjsonarr(jsonarr,parseInt($("#page").attr("value"))+1);
+		insertjsonarr(jsonarr,parseInt($("#page").attr("value")));
     	console.log($("#page").attr("value")+"~"+$("#questionnumz").attr("value"));
     	if(parseInt($("#page").attr("value"))+parseInt(1) > $("#questionnumz").attr("value")){
     		var truthBeTold = window.confirm("确认要交卷了吗"); 
@@ -658,7 +706,7 @@ padding: 0;
     			console.log("他交卷了");
     			document.getElementById("currenttime").innerHTML = "考试已结束";
                 $.ajax({
-                	url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&q_id='+$("#q_id").attr("value"),
+                	url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&qq_id='+$("#qq_id").attr("value"),
                 	type:'POST',
                 	data:$('#formz').serialize(),
                 	async:false,
@@ -669,12 +717,11 @@ padding: 0;
     		}else{
     			console.log("他还没交卷");
     			$.ajax({
-    				url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&q_id='+$("#q_id").attr("value"),
+    				url:'insertAnswerActionF?t_id='+$("#t_id").attr("value")+'&&qq_id='+$("#qq_id").attr("value"),
     				type:'POST',
                 	data:$('#formz').serialize(),
                 	async:false,
                 	success:function(){
-                		console.log("进来没有到底");
                 		$.ajax({
                 			url:'queryQuestionAction',
                 			data:{
@@ -721,13 +768,12 @@ padding: 0;
     		}
     	}else{
     		if($("#t_id").attr("value") == 1 || $("#t_id").attr("value") == 2){
-        		console.log("日你妈");
             	if($("#t_id").attr("value")==1 && $('input:radio[name="option"]:checked').val() == null){
             		alert('什么都没选中');
             		$.ajax({
             			url:'deleteAnswerAction',
             			data:{
-            				'q_id' : $("#q_id").attr("value")
+            				'qq_id' : $("#pq_id").attr("value")
             			},
             			dataType:'json',
             			success:function(){
@@ -780,7 +826,7 @@ padding: 0;
     	    			$.ajax({
     	    				url:'deleteAnswerAction',
     	    				data:{
-    	    					'q_id' : $("#q_id").attr("value")
+    	    					'qq_id' : $("#pq_id").attr("value")
     	    				},
     	    				dataType:'json',
     	    				success : function(data){
@@ -830,7 +876,7 @@ padding: 0;
             		}
             		else{
             			$.ajax({
-            			url:'insertAnswerAction?q_id='+$("#q_id").attr("value"),
+            			url:'insertAnswerAction?qq_id='+$("#pq_id").attr("value"),
             			type:'POST',
             			data:$('#formz').serialize(),
             			async:false,
@@ -883,7 +929,7 @@ padding: 0;
             	})}
         	}else{//如果不是选择题
         		$.ajax({
-            		url:'insertAnswerAction1?q_id='+$("#q_id").attr("value"),
+            		url:'insertAnswerAction1?qq_id='+$("#pq_id").attr("value"),
             		type:'POST',
             		data:$('#formz').serialize(),
             		async:false,

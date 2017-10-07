@@ -47,16 +47,18 @@ public class QueryQuestionAction extends HttpServlet{
 		int e_id = (int) session.getAttribute("e_id");
 		int u_id = (int) session.getAttribute("u_id");
 //		int page = 1;
+//		int qq_id = Integer.parseInt(req.getParameter("qq_id"));
 		int page = Integer.parseInt(req.getParameter("page"));
 		int pageSize = 1;
 		
-		Exam_question exam_question = eqs.queryOneExam_questionByE_id(e_id, page, pageSize);
+		Exam_question exam_question = eqs.queryOneExam_questionByE_id(e_id, page, pageSize);//查找该考试的所有试题->分页查出当前试题
 		System.out.println("Action:"+exam_question);
-		Question question = qs.queryOneQuestionByE_id(e_id, page, pageSize);
-		List<Optionofquestion> options = ooqs.queryOptionofquestionsByQ_id(question.getQ_id());
-		int questionnum = eqs.getQuestionNumByE_id(e_id);
-		System.out.println("u_id: "+e_id+" e_id: "+u_id+" page: "+page);
-		Answerofuser answerofuser = aous.selectAnswerofuser(u_id, e_id, page);
+		Question question = qs.queryOneQuestionByE_id(e_id, page, pageSize);//查找该试题的具体信息
+		List<Optionofquestion> options = ooqs.queryOptionofquestionsByQ_id(question.getQ_id());//查找该试题的所有选项
+		int questionnum = eqs.getQuestionNumByE_id(e_id);//查找该考试题目数目
+//		System.out.println("u_id: "+u_id+" e_id: "+e_id+" qq_id: "+qq_id);
+//		Answerofuser answerofuser = aous.selectAnswerofuser(u_id, e_id, qq_id);//查找该考试的该用户的该题信息
+		Answerofuser answerofuser = aous.selectAnswerofuser(u_id, e_id, exam_question.getQ_id());
 		JSONObject json = new JSONObject();
 		System.out.println("下一页答案：" + answerofuser.getAnswer());
 		json.put("exam_question", exam_question);

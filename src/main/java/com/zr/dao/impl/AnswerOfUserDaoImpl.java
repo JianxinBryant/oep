@@ -77,7 +77,7 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 	}
 
 	@Override
-	public Answerofuser selectAnswerofuser(int u_id, int e_id, int q_id) {
+	public Answerofuser selectAnswerofuser(int u_id, int e_id, int qq_id) {
 		Answerofuser answerofuser = new Answerofuser();
 		Connection con = JDBCUtil.getConnection();
 		StringBuilder sql = new StringBuilder("select * from answerofuser WHERE u_id=? AND e_id=? AND q_id=?");
@@ -86,7 +86,7 @@ public class AnswerOfUserDaoImpl implements AnswerOfUserDao{
 			pst = con.prepareStatement(sql.toString());
 			pst.setInt(1, u_id);
 			pst.setInt(2, e_id);
-			pst.setInt(3, q_id);
+			pst.setInt(3, qq_id);
 			ResultSet set = pst.executeQuery();
 			if(set.next()){
 				answerofuser.setU_id(set.getInt(1));

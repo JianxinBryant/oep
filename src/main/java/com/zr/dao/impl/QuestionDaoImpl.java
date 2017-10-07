@@ -42,4 +42,33 @@ public class QuestionDaoImpl implements QuestionDao{
 		return question;
 	}
 
+	@Override
+	public List<Question> queryAllQuestionsByE_id(int e_id) {
+		List<Question> questions = new ArrayList<Question>();
+		Connection con = JDBCUtil.getConnection();
+		StringBuffer sql = new StringBuffer("SELECT question.q_id,t_id,q_content,q_answer FROM exam_question ");
+		sql.append("JOIN question ON exam_question.q_id=question.q_id WHERE e_id = ? ");
+		PreparedStatement pst = null;
+		try {
+			 pst = con.prepareStatement(sql.toString());
+			pst.setInt(1, e_id);
+			ResultSet set = pst.executeQuery();
+			while(set.next()){
+				Question question = new Question();
+				question.setQ_id(set.getInt(1));
+				question.setT_id(set.getInt(2));
+				question.setQ_content(set.getString(3));
+				question.setQ_answer(set.getString(4));
+				questions.add(question);
+			}
+			return questions;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			JDBCUtil.closeJDBC(pst, con);
+		}
+		return questions;
+	}
+
 }

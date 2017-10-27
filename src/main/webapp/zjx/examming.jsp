@@ -28,7 +28,7 @@ padding: 0;
 	margin: auto;
 	margin-top: 50px;
 	position: absolute;
-	border: 2px solid #ffcc00;
+	border: 2px solid white;
 	left: 200px;
 	top: 14px;
 	width: 1000px;
@@ -49,10 +49,16 @@ padding: 0;
 #btn {
 	margin: auto;
 	margin-top: 30px;
-	height: 50px;
-	width: 300px;
+	height: 40px;
+	width: 60px;
 }
 
+#btn1 {
+	margin: auto;
+	margin-top: 30px;
+	height: 40px;
+	width: 60px;
+}
 #text {
 	font-size: 20px;
 	height: 30px;
@@ -71,7 +77,7 @@ padding: 0;
 </style>
 </head>
 <script>
-		var host = "172.18.23.73"; //172.18.23.73
+		var host = "172.18.10.73"; //172.18.23.73
 		
 		function handleOnMessage(){
 			console.log("收到消息");
@@ -252,6 +258,18 @@ padding: 0;
 		})
 	}
     window.onload = function(){
+    	var timer = setInterval(function(){
+    		$.ajax({
+    			url:'checkUserAction',
+    			success:function(data){
+    				console.log(data);
+    				if(data=='1'){
+    					$("#body").append("<div><h4>你的账户在其他地点登录，请注意密码是否泄漏！</h4><a href='${pageContext.request.contextPath}/hwx/Login.jsp'>确定</a></div>");
+    					clearInterval(timer);
+    				}
+    			}
+    		});
+    	},4000);
 //        $("#iframe").width(100%);
 		$("#pq_id").attr("value" , 1);
 		$.ajax({
@@ -1017,7 +1035,7 @@ padding: 0;
     }
     
  }
-    
         		
 </script>
+
 </html>

@@ -35,16 +35,16 @@
 	        <div class="col-md-8">
 	            <h2>考试须知</h2>
 	            <h4>考试时间：<div id="testtime">${requestScope.examtime }</div></h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
-	            <h4>zzzzzzzzzzzzzzzzzzzzzzzzzzz</h4>
+	            <h4>1、考生须诚信考试，遵守考场规则和考试纪律</h4>
+	            <h4>2、需在安静环境下进行考试，考生禁止遮挡摄像头</h4>
+	            <h4>3、请勿乱动，以免摄像头识别不出</h4>
+	            <h4>4、禁止与他人进行讨论</h4>
+	            <h4>5、禁止嘲讽在屏幕另一端的监考员</h4>
+	            <h4>6、禁止调戏在屏幕另一端的hr姐姐</h4>
+	            <h4>7、禁止网上搜索答案并复制</h4>
+	            <h4>8、禁止传播试题</h4>
+	            <h4>9、禁止秀恩爱</h4>
+	            <h4>10、禁止一切有关金钱交易的舞弊行为</h4>
 	            <button id='btn' class='btn btn-default'>进入考试</button>
 	        </div>
 	       	<div class="col-md-4" style="margin-top: 20px ; border: 1px solid">
@@ -57,6 +57,18 @@
 </body>
 <script>
     window.onload = function(){
+    	var timer = setInterval(function(){
+    		$.ajax({
+    			url:'checkUserAction',
+    			success:function(data){
+    				console.log(data);
+    				if(data=='1'){
+    					$("#body").append("<div><h4>你的账户在其他地点登录，请注意密码是否泄漏！</h4><a href='${pageContext.request.contextPath}/hwx/Login.jsp'>确定</a></div>");
+    					clearInterval(timer);
+    				}
+    			}
+    		});
+    	},4000);
     	$("#btn").hide();
         showTime();
         function addZero(i){

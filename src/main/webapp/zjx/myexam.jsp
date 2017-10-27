@@ -54,18 +54,34 @@ window.onload = function(){
 				if(parseInt((starttime.getTime() - nowtime.getTime()) / 1000) > 0){
 					$("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>进入考试预览</a></li>");
 				}else if(parseInt((starttime.getTime() - nowtime.getTime()) / 1000) < 0 && parseInt((endtime.getTime() - nowtime.getTime()) / 1000) > 0){
-					$("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>正在考试</a></li>");
+					if(v.score != 0){
+						$("#ul").append("<h4>已完成考试</h4></li>");
+					}else
+						$("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>正在考试</a></li>");
 				}else{
 					if(v.score == 0){
 						/* $("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>缺考</a></li>"); */
 						$("#ul").append("<h4>缺考</h4></li>");
 					}else{
-						$("#ul").append("<a class='a' href='joinWaitExamAction?e_id="+v.e_id+"'>已完成考试</a></li>");
+						$("#ul").append("<h4>已完成考试</h4></li>");
 					}
 				}
 			})
 		}
 	})
+	
+	var timer = setInterval(function(){
+		$.ajax({
+			url:'checkUserAction',
+			success:function(data){
+				console.log(data);
+				if(data=='1'){
+					$("#body").append("<div><h4>你的账户在其他地点登录，请注意密码是否泄漏！</h4><a href='${pageContext.request.contextPath}/hwx/Login.jsp'>确定</a></div>");
+					clearInterval(timer);
+				}
+			}
+		});
+	},4000);
 }
 </script>
 </html>

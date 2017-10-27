@@ -9,7 +9,10 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-
+    <!-- 监听器 -->
+	<listener>
+       <listener-class>com.zr.listener.MyListener</listener-class>
+	</listener>
    <!-- 成绩查询-->
   <servlet>
   	<servlet-name>queryscore</servlet-name>
@@ -245,6 +248,23 @@
   	<servlet-name>queryAllQuestionAction</servlet-name>
   	<servlet-class>com.zr.action.QueryAllQuestionAction</servlet-class>
   </servlet>
+  <servlet-mapping>
+  	<servlet-name>checkUserAction</servlet-name>
+  	<url-pattern>/zjx/checkUserAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>checkUserAction</servlet-name>
+  	<servlet-class>com.zr.action.CheckUserAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>endExamAction</servlet-name>
+  	<url-pattern>/zjx/endExamAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>endExamAction</servlet-name>
+  	<servlet-class>com.zr.action.EndExamAction</servlet-class>
+  </servlet>
+  
   
   <!-- 用户登录 -->
   <servlet-mapping>
@@ -426,7 +446,42 @@
 		<url-pattern>/photoGraph.do</url-pattern>
 	</servlet-mapping>
   
-  	<session-config>
-		<session-timeout>60</session-timeout>
-  	</session-config>
+  <!-- servlet 过滤器 -->
+  <!--  -->
+ <!-- <filter>
+  <filter-name>LoginFilter</filter-name>
+  <filter-class>com.zr.utils.LoginFilter</filter-class>
+  <init-param>
+  		<param-name>redirectURL</param-name>
+  		<param-value>/hwx/Login.jsp</param-value>
+  </init-param>
+  <init-param> 
+    	<param-name>notCheckURLList</param-name> 
+       	<param-value></param-value> 
+  </init-param> 
+ </filter>
+  <filter-mapping>
+  		<filter-name>LoginFilter</filter-name>
+ 		<url-pattern>/note.jsp;/showtabel</url-pattern>
+ </filter-mapping>
+ 
+ 
+ <filter>
+  <filter-name>LoginFilter1</filter-name>
+  <filter-class>com.zr.utils.LoginFilter1</filter-class>
+  <init-param>
+  		<param-name>redirectURL</param-name>
+  		<param-value>/hwx/Login4Manager.jsp</param-value>
+  </init-param>
+  <init-param> 
+    	<param-name>notCheckURLList</param-name> 
+       	<param-value></param-value> 
+  </init-param> 
+ </filter>
+  <filter-mapping>
+  		<filter-name>LoginFilter1</filter-name>
+ 		<url-pattern>/note.jsp;/showtabel</url-pattern>
+ </filter-mapping> -->
+ 
+  	
 </web-app>
